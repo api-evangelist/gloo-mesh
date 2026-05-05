@@ -1,0 +1,13 @@
+{
+  "repo": "gloo-mesh",
+  "feeds": [
+    {
+      "source": "https://www.solo.io/blog/",
+      "feed_url": "https://www.solo.io/blog/rss.xml",
+      "saved": 10,
+      "title": "Solo.io Latest Blogs - Insights into Cloud Native Connectivity"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:28:24Z"
+}
