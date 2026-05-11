@@ -92,6 +92,12 @@ common:
     url: https://www.solo.io/legal/terms-of-service/
   - type: Privacy Policy
     url: https://www.solo.io/legal/privacy-policy/
+  - type: Integrations
+    url: https://www.solo.io/partners
+integrations:
+  - name: Partner with Solo.io
+  - name: AWS logo
+  - name: Google cloud logo
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
