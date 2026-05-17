@@ -43,11 +43,11 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.solo.io/gloo-mesh-enterprise/latest/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/
       - type: Reference
         url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/
-      - type: Change Log
+      - type: ChangeLog
         url: https://docs.solo.io/gloo-mesh-enterprise/latest/changelog/
   - aid: gloo-mesh:gloo-mesh-core
     name: Gloo Mesh Core
@@ -65,7 +65,7 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.solo.io/gloo-mesh-core/latest/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://docs.solo.io/gloo-mesh-core/latest/getting_started/
       - type: Reference
         url: https://docs.solo.io/gloo-mesh-core/latest/reference/
@@ -76,21 +76,21 @@ common:
     url: https://www.solo.io/products/gloo-mesh/
   - type: Documentation
     url: https://docs.solo.io/gloo-mesh-enterprise/latest/
-  - type: Getting Started
+  - type: GettingStarted
     url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/
   - type: Blog
     url: https://www.solo.io/blog/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/solo-io
-  - type: Change Log
+  - type: ChangeLog
     url: https://docs.solo.io/gloo-mesh-enterprise/latest/changelog/
   - type: Community
     url: https://slack.solo.io/
   - type: Support
     url: https://www.solo.io/company/contact/
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://www.solo.io/legal/terms-of-service/
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.solo.io/legal/privacy-policy/
   - type: Integrations
     url: https://www.solo.io/partners
