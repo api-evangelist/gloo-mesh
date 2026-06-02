@@ -2,12 +2,20 @@
   "repo": "gloo-mesh",
   "feeds": [
     {
-      "source": "https://www.solo.io/blog/",
+      "source": "https://www.solo.io/blog/rss.xml",
       "feed_url": "https://www.solo.io/blog/rss.xml",
-      "title": "Solo.io Latest Blogs - Insights into Cloud Native Connectivity",
-      "saved": 46
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/",
+      "feed_url": "https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/index.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
   "post_count": 59,
-  "fetched": "2026-05-17T20:20:35Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }
