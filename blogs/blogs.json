@@ -9,6 +9,13 @@
       "method": "feed"
     },
     {
+      "source": "https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/index.xml",
+      "feed_url": "https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/index.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/",
       "feed_url": "https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/index.xml",
       "title": "",
@@ -16,6 +23,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 65,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 72,
+  "fetched": "2026-06-27T12:03:07Z"
 }
