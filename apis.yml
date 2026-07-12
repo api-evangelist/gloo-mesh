@@ -70,6 +70,10 @@ apis:
       - type: Reference
         url: https://docs.solo.io/gloo-mesh-core/latest/reference/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/gloo-mesh-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/gloo-mesh-domain-security.yml
   - type: Website
     url: https://www.solo.io/
   - type: Portal
