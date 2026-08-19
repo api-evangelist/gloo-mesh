@@ -34,7 +34,7 @@ tags:
   - Service Mesh
 url: >-
   https://raw.githubusercontent.com/api-evangelist/gloo-mesh/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: gloo-mesh:gloo-mesh-enterprise
     name: Gloo Mesh Enterprise
