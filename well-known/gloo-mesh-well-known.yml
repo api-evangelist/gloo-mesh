@@ -1,0 +1,235 @@
+generated: '2026-09-12'
+method: probed
+source: >-
+  live GET of the named /.well-known/ path list plus /apis.json and /apis.yml on every host
+  this record knows: the registrable domain and www, the docs host, the MCP/search host and
+  the CLI install host
+note: >-
+  NOTHING WAS FOUND. Every named discovery document 404s on solo.io, www.solo.io,
+  docs.solo.io and search.solo.io. run.solo.io is a Webflow catch-all that answers HTTP 200
+  with an HTML page for EVERY path, including a negative-control path that cannot exist, so
+  none of its 200s is a document. No WellKnown, SecurityTxt or AgentCard pointer is emitted
+  from this probe — the file records a verified absence, which is valid data, not a surface.
+  Solo.io products are self-hosted Kubernetes software, so OAuth/OIDC discovery documents
+  belong to the customer's own identity provider rather than to a Solo.io host.
+hit_count: 0
+security_txt: none
+agent_card: none
+hosts:
+  - host: https://www.solo.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/ucp.json
+        status: 404
+      - path: /.well-known/acp.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /apis.yml
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+    path_echo_control: passed
+    soft_404_control:
+      path: /.well-known/gloo-mesh-negative-control-7f3ab91c.json
+      status: 404
+  - host: https://solo.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/ucp.json
+        status: 404
+      - path: /.well-known/acp.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /apis.yml
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+    path_echo_control: passed
+    soft_404_control:
+      path: /.well-known/gloo-mesh-negative-control-7f3ab91c.json
+      status: 404
+  - host: https://docs.solo.io
+    note: >-
+      documentation host for Gloo Mesh (Gloo Platform APIs). It serves no /.well-known/
+      documents, but it DOES serve a first-party llms.txt at
+      /gloo-mesh-enterprise/llms.txt (HTTP 200, text/plain) and a markdown twin of every
+      docs page at <page>.md. Those are captured in llms/gloo-mesh-llms.txt, not here.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/ucp.json
+        status: 404
+      - path: /.well-known/acp.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /apis.yml
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+    path_echo_control: passed
+    soft_404_control:
+      path: /.well-known/gloo-mesh-negative-control-7f3ab91c.json
+      status: 404
+  - host: https://search.solo.io
+    note: >-
+      host of the published Solo.io Docs MCP server (https://search.solo.io/mcp). The MCP
+      endpoint answers tools/list anonymously, so it advertises NO OAuth protected-resource
+      metadata — consistent with the 404s below rather than a gap.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/ucp.json
+        status: 404
+      - path: /.well-known/acp.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /apis.yml
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+    path_echo_control: passed
+    soft_404_control:
+      path: /.well-known/gloo-mesh-negative-control-7f3ab91c.json
+      status: 404
+  - host: https://run.solo.io
+    note: >-
+      CATCH-ALL. This Webflow host returns HTTP 200 with a text/html marketing page for every
+      path probed, including /.well-known/gloo-mesh-negative-control-7f3ab91c.json, which
+      cannot exist. Every 200 recorded here is a soft 404 and NONE is a document; no file was
+      saved and no pointer is emitted. The host's only real function is the meshctl installer
+      at /meshctl/install, which 302s to
+      https://storage.googleapis.com/meshctl-releases/install.sh.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/aauth-resource.json
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/apis.json
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /apis.json
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+      - path: /.well-known/agent.json
+        status: 200
+        content_type: text/html
+        file: null
+        verdict: soft-404 HTML shell, not a document
+    path_echo_control: failed
+    soft_404_control:
+      path: /.well-known/gloo-mesh-negative-control-7f3ab91c.json
+      status: 200
+      content_type: text/html
+      bytes: 4000
+      verdict: >-
+        200 on a path that cannot exist — every hit on this host is discarded

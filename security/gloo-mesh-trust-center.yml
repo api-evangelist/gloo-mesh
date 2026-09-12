@@ -1,0 +1,31 @@
+generated: '2026-09-12'
+method: probed
+source: https://trust.solo.io/
+url: https://trust.solo.io/
+name: Solo Trust Center
+platform: Vanta
+certifications: []
+certifications_note: >-
+  NONE READABLE — and that is the finding, not an omission. trust.solo.io returns HTTP 200
+  with a 6.6 KB Vanta shell whose entire body renders client-side from
+  assets.vanta.com bundles; the served HTML carries a title, a description and font preloads
+  and no certification, control or subprocessor name. The Vanta public API for the trust
+  center (slug 3wkg6mnjdn7q8adrbhqvzs) answers 401 unauthenticated. So a real trust program
+  exists and a human can read it in a browser, but no machine can read WHICH frameworks it
+  covers. No certification is asserted here and no `Compliance` pointer is emitted on the
+  strength of it — asserting SOC 2 or ISO 27001 because a Vanta page exists would be a guess.
+x-evidence:
+  fetched: '2026-09-12'
+  url: https://trust.solo.io/
+  http_status: 200
+  content_type: text/html
+  bytes: 6595
+  rendering: client-side (Vanta trust report bundle)
+  vanta_slug: 3wkg6mnjdn7q8adrbhqvzs
+  api_probe:
+    url: https://api.vanta.com/v1/public/trust-center/3wkg6mnjdn7q8adrbhqvzs
+    http_status: 401
+related:
+  security_policy: https://www.solo.io/security
+  cve_lifecycle: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/security_updates/cve-lifecycle
+  vulnerability_disclosure: security/gloo-mesh-vulnerability-disclosure.yml

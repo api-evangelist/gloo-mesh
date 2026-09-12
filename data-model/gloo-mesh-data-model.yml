@@ -1,0 +1,1333 @@
+generated: '2026-09-12'
+method: derived
+source: crd/ (gloo-platform-crds 2.14.0) and grpc/ (solo-io/solo-apis gloo-mesh-v2.13.x)
+note: 'Entity/relationship graph DERIVED mechanically from the OpenAPI v3 structural schemas inside the
+  70 Gloo Mesh CustomResourceDefinitions saved under crd/. Entities are CRD kinds; spec_fields are the
+  real top-level spec properties read out of each schema; relationships are read from the selector fields
+  (applyToDestinations / applyToRoutes / applyToWorkloads / workloadClusters) and from every property
+  whose name ends in Ref or Refs, which in Gloo is an ObjectReference carrying name, namespace and cluster.
+  Nothing here was invented: if a field is listed, it is in the shipped schema.'
+identity:
+  addressing: Kubernetes object identity — apiVersion + kind + metadata.namespace + metadata.name
+  cross_cluster: 'Gloo ObjectReferences additionally carry a `cluster` field, which is what makes the
+    graph multi-cluster: a policy in the management cluster can reference a destination in a workload
+    cluster.'
+  tenancy: Workspace + WorkspaceSettings scope which namespaces and clusters a team owns, and control
+    import/export across workspaces
+counts:
+  entities: 70
+  api_groups: 13
+  relationships: 88
+entities:
+- entity: AccessLogPolicy
+  group: observability.policy.gloo.solo.io
+  plural: accesslogpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToWorkloads
+  - config
+  selectors:
+  - field: applyToWorkloads
+    binds: selects workloads in the mesh
+- entity: AccessPolicy
+  group: security.policy.gloo.solo.io
+  plural: accesspolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - applyToWorkloads
+  - config
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+  - field: applyToWorkloads
+    binds: selects workloads in the mesh
+- entity: ActiveHealthCheckPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: activehealthcheckpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - config
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+- entity: AdaptiveRequestConcurrencyPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: adaptiverequestconcurrencypolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - config
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+- entity: ApiDoc
+  group: apimanagement.gloo.solo.io
+  plural: apidocs
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - graphql
+  - grpc
+  - openapi
+  - servedBy
+- entity: ApiProduct
+  group: apimanagement.gloo.solo.io
+  plural: apiproducts
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - portalMetadata
+  - targetRef
+  object_references:
+  - targetRef
+  selectors:
+  - field: targetRef
+    binds: binds to a named target resource
+- entity: ApiSchemaDiscovery
+  group: apimanagement.gloo.solo.io
+  plural: apischemadiscoveries
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - openapi
+  - servedBy
+- entity: AuthConfig
+  group: extauth.solo.io
+  plural: authconfigs
+  versions:
+  - v1
+  scope: Namespaced
+  spec_fields: []
+- entity: CORSPolicy
+  group: security.policy.gloo.solo.io
+  plural: corspolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: CSRFPolicy
+  group: security.policy.gloo.solo.io
+  plural: csrfpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: CertificateRequest
+  group: internal.gloo.solo.io
+  plural: certificaterequests
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - certificateSigningRequest
+- entity: ClientTLSPolicy
+  group: security.policy.gloo.solo.io
+  plural: clienttlspolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - disable
+  - istioMutual
+  - mutual
+  - simple
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+- entity: CloudProvider
+  group: infrastructure.gloo.solo.io
+  plural: cloudproviders
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - aws
+- entity: CloudResources
+  group: infrastructure.gloo.solo.io
+  plural: cloudresources
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - aws
+  - provider
+- entity: ConnectionPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: connectionpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - config
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+- entity: DLPPolicy
+  group: security.policy.gloo.solo.io
+  plural: dlppolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: Dashboard
+  group: admin.gloo.solo.io
+  plural: dashboards
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - authn
+  - authz
+- entity: DiscoveredCNI
+  group: internal.gloo.solo.io
+  plural: discoveredcnis
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - agent
+  - ciliumConfig
+  - metricsPortNumber
+  - provider
+  - version
+- entity: DiscoveredGateway
+  group: internal.gloo.solo.io
+  plural: discoveredgateways
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - externalAddresses
+  - service
+  - serviceAccountRefs
+  - serviceType
+  - workloadLabels
+  object_references:
+  - serviceAccountRefs
+- entity: ExtAuthPolicy
+  group: security.policy.gloo.solo.io
+  plural: extauthpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - applyToRoutes
+  - config
+  object_references:
+  - config.glooAuth.configs.apiKeyAuth.apiKeySecretRefs
+  - config.glooAuth.configs.apiKeyAuth.hmac.sharedSecretRef
+  - config.glooAuth.configs.apiKeyAuth.k8sSecretApikeyStorage.apiKeySecretRefs
+  - config.glooAuth.configs.hmacAuth.secretRefs
+  - config.glooAuth.configs.hmacAuth.secretRefs.secretRefs
+  - config.glooAuth.configs.ldap.groupLookupSettings.credentialsSecretRef
+  - config.glooAuth.configs.oauth.clientSecretRef
+  - config.glooAuth.configs.oauth2.accessTokenValidation.introspection.clientSecretRef
+  - config.glooAuth.configs.oauth2.oauth2.clientSecretRef
+  - config.glooAuth.configs.oauth2.oauth2.session.cipherConfig.keyRef
+  - config.glooAuth.configs.oauth2.oidcAuthorizationCode.clientAuthentication.clientSecret.clientSecretRef
+  - config.glooAuth.configs.oauth2.oidcAuthorizationCode.clientAuthentication.privateKeyJwt.signingKeyRef
+  - config.glooAuth.configs.oauth2.oidcAuthorizationCode.clientSecretRef
+  - config.glooAuth.configs.oauth2.oidcAuthorizationCode.session.cipherConfig.keyRef
+  - config.glooAuth.configs.passThroughAuth.grpc.tlsConfig.secretRef
+  - config.glooAuth.configs.passThroughAuth.http.tlsConfig.secretRef
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: ExtAuthServer
+  group: admin.gloo.solo.io
+  plural: extauthservers
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - clearRouteCache
+  - destinationServer
+  - failureModeAllow
+  - httpService
+  - requestBody
+  - requestTimeout
+  - statPrefix
+  - statusOnError
+  - transportApiVersion
+  object_references:
+  - destinationServer.ref
+- entity: ExternalEndpoint
+  group: networking.gloo.solo.io
+  plural: externalendpoints
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - address
+  - locality
+  - ports
+- entity: ExternalService
+  group: networking.gloo.solo.io
+  plural: externalservices
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - addresses
+  - hosts
+  - ports
+  - selector
+  - subjectAltNames
+  object_references:
+  - ports.egressGatewayRoutes.virtualGatewayRefs
+- entity: ExternalWorkload
+  group: networking.gloo.solo.io
+  plural: externalworkloads
+  versions:
+  - v2alpha1
+  scope: Namespaced
+  spec_fields:
+  - connectedClusters
+  - identitySelector
+  - ports
+  - readinessProbe
+- entity: FailoverPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: failoverpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - config
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+- entity: FaultInjectionPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: faultinjectionpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: GatewayLifecycleManager
+  group: admin.gloo.solo.io
+  plural: gatewaylifecyclemanagers
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - helmGlobal
+  - installations
+- entity: GraphQLAllowedQueryPolicy
+  group: security.policy.gloo.solo.io
+  plural: graphqlallowedquerypolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: GraphQLPersistedQueryCachePolicy
+  group: resilience.policy.gloo.solo.io
+  plural: graphqlpersistedquerycachepolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: GraphQLResolverMap
+  group: apimanagement.gloo.solo.io
+  plural: graphqlresolvermaps
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - extensions
+  - types
+  object_references:
+  - types.fields.resolvers.grpcResolver.destinations.ref
+  - types.fields.resolvers.restResolver.destinations.ref
+- entity: GraphQLSchema
+  group: apimanagement.gloo.solo.io
+  plural: graphqlschemas
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - proxied
+  - resolved
+  - schemaRef
+  object_references:
+  - proxied.graphqlServers.ref
+  - resolved.resolverMapRefs
+  - schemaRef
+- entity: GraphQLStitchedSchema
+  group: apimanagement.gloo.solo.io
+  plural: graphqlstitchedschemas
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - options
+  - subschemas
+- entity: HTTPBufferPolicy
+  group: trafficcontrol.policy.gloo.solo.io
+  plural: httpbufferpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: HeaderManipulationPolicy
+  group: trafficcontrol.policy.gloo.solo.io
+  plural: headermanipulationpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRouteDestinations
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: InsightsConfig
+  group: admin.gloo.solo.io
+  plural: insightsconfigs
+  versions:
+  - v2alpha1
+  scope: Namespaced
+  spec_fields:
+  - disabledInsights
+- entity: IssuedCertificate
+  group: internal.gloo.solo.io
+  plural: issuedcertificates
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - agentCa
+  - autoRestartPods
+  - certOptions
+  - hosts
+  - issuedCertificateSecret
+  - meshRef
+  - mgmtServerCa
+  - passiveCertificateAuthorities
+  object_references:
+  - agentCa.vault.caSecretRef
+  - agentCa.vault.kubernetesAuth.serviceAccountRef
+  - agentCa.vault.tokenSecretRef
+  - meshRef
+- entity: IstioLifecycleManager
+  group: admin.gloo.solo.io
+  plural: istiolifecyclemanagers
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - helmGlobal
+  - installations
+  object_references:
+  - installations.istioController.envVars.valueFrom.configMapKeyRef
+  - installations.istioController.envVars.valueFrom.fieldRef
+  - installations.istioController.envVars.valueFrom.resourceFieldRef
+  - installations.istioController.envVars.valueFrom.secretKeyRef
+- entity: IstioOperator
+  group: install.istio.io
+  plural: istiooperators
+  versions:
+  - v1alpha1
+  scope: Namespaced
+  spec_fields: []
+- entity: JWTPolicy
+  group: security.policy.gloo.solo.io
+  plural: jwtpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - applyToRoutes
+  - config
+  object_references:
+  - config.providers.local.secretRef
+  - config.providers.local.secretRef.objectRef
+  - config.providers.remote.destinationRef
+  - config.providers.remote.destinationRef.ref
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: KubernetesCluster
+  group: admin.gloo.solo.io
+  plural: kubernetesclusters
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - clusterDomain
+  - skipWarming
+- entity: ListenerConnectionPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: listenerconnectionpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToListeners
+  - config
+  selectors:
+  - field: applyToListeners
+    binds: selects gateway listeners
+- entity: LoadBalancerPolicy
+  group: trafficcontrol.policy.gloo.solo.io
+  plural: loadbalancerpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - config
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+- entity: Mesh
+  group: internal.gloo.solo.io
+  plural: meshes
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - agentInfo
+  - ambientCapable
+  - discoveryNamespaces
+  - hub
+  - installation
+  - ipFamily
+  - istiodServiceAccount
+  - rootNamespace
+  - smartDnsProxyingEnabled
+  - spire
+  - tag
+  - trustDomain
+- entity: MirrorPolicy
+  group: trafficcontrol.policy.gloo.solo.io
+  plural: mirrorpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  object_references:
+  - config.destination.ref
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: OutlierDetectionPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: outlierdetectionpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - config
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+- entity: PodBounceDirective
+  group: internal.gloo.solo.io
+  plural: podbouncedirectives
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - meshRef
+  - podsToBounce
+  object_references:
+  - meshRef
+  - podsToBounce.rootCertSync.configMapRef
+  - podsToBounce.rootCertSync.secretRef
+- entity: Portal
+  group: apimanagement.gloo.solo.io
+  plural: portals
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - apiProducts
+  - apis
+  - domains
+  - portalBackendSelectors
+  - usagePlans
+  - visibility
+- entity: PortalConfig
+  group: internal.gloo.solo.io
+  plural: portalconfigs
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - apis
+  - domains
+  - groups
+  - portalCustomMetadata
+  - portalRef
+  - public
+  - usagePlans
+  object_references:
+  - portalRef
+  - usagePlans.extAuthPolicies.extAuthPolicyRef
+  - usagePlans.rateLimitPolicy.rateLimitPolicyRef
+- entity: PortalGroup
+  group: apimanagement.gloo.solo.io
+  plural: portalgroups
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - accessLevel
+  - description
+  - membership
+  - name
+- entity: ProgressiveDelivery
+  group: networking.gloo.solo.io
+  plural: progressivedeliveries
+  versions:
+  - v2alpha1
+  scope: Namespaced
+  spec_fields:
+  - routeTableRef
+  - virtualServicePatch
+  object_references:
+  - routeTableRef
+- entity: ProxyProtocolPolicy
+  group: trafficcontrol.policy.gloo.solo.io
+  plural: proxyprotocolpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToListeners
+  - config
+  selectors:
+  - field: applyToListeners
+    binds: selects gateway listeners
+- entity: RateLimitClientConfig
+  group: trafficcontrol.policy.gloo.solo.io
+  plural: ratelimitclientconfigs
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - raw
+- entity: RateLimitConfig
+  group: ratelimit.solo.io
+  plural: ratelimitconfigs
+  versions:
+  - v1alpha1
+  scope: Namespaced
+  spec_fields: []
+- entity: RateLimitPolicy
+  group: trafficcontrol.policy.gloo.solo.io
+  plural: ratelimitpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: RateLimitServerConfig
+  group: admin.gloo.solo.io
+  plural: ratelimitserverconfigs
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - destinationServers
+  - raw
+  object_references:
+  - destinationServers.ref
+- entity: RateLimitServerSettings
+  group: admin.gloo.solo.io
+  plural: ratelimitserversettings
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - denyOnFail
+  - destinationServer
+  - requestTimeout
+  object_references:
+  - destinationServer.ref
+- entity: RetryTimeoutPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: retrytimeoutpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: RootTrustPolicy
+  group: admin.gloo.solo.io
+  plural: roottrustpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToMeshes
+  - config
+  object_references:
+  - config.agentCa.vault.caSecretRef
+  - config.agentCa.vault.kubernetesAuth.serviceAccountRef
+  - config.agentCa.vault.tokenSecretRef
+  - config.mgmtServerCa.secretRef
+  - config.passiveCertificateAuthorities.secretRef
+- entity: RouteTable
+  group: networking.gloo.solo.io
+  plural: routetables
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToDestinations
+  - defaultDestination
+  - failureMode
+  - hosts
+  - http
+  - portalMetadata
+  - tcp
+  - tls
+  - virtualGateways
+  - virtualServiceAnnotations
+  - weight
+  - workloadSelectors
+  object_references:
+  - defaultDestination.ref
+  - http.forwardTo.destinations.ref
+  - tcp.forwardTo.destinations.ref
+  - tls.forwardTo.destinations.ref
+  selectors:
+  - field: applyToDestinations
+    binds: selects destinations (VirtualDestination / ExternalService / Kubernetes Service)
+  - field: workloadSelectors
+    binds: selects the workloads the resource applies to
+- entity: SpireRegistrationEntry
+  group: internal.gloo.solo.io
+  plural: spireregistrationentries
+  versions:
+  - v2alpha1
+  scope: Namespaced
+  spec_fields:
+  - dnsNames
+  - parentId
+  - selectors
+  - spiffeId
+  - x509SvidTtl
+- entity: TransformationPolicy
+  group: trafficcontrol.policy.gloo.solo.io
+  plural: transformationpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: TrimProxyConfigPolicy
+  group: resilience.policy.gloo.solo.io
+  plural: trimproxyconfigpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToWorkloads
+  - config
+  selectors:
+  - field: applyToWorkloads
+    binds: selects workloads in the mesh
+- entity: VirtualDestination
+  group: networking.gloo.solo.io
+  plural: virtualdestinations
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - clientMode
+  - externalServices
+  - externalWorkloads
+  - hosts
+  - ports
+  - services
+- entity: VirtualGateway
+  group: networking.gloo.solo.io
+  plural: virtualgateways
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - listeners
+  - workloads
+- entity: VirtualServiceBackup
+  group: internal.gloo.solo.io
+  plural: virtualservicebackups
+  versions:
+  - v2alpha1
+  scope: Namespaced
+  spec_fields:
+  - spec
+- entity: WAFPolicy
+  group: security.policy.gloo.solo.io
+  plural: wafpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToRoutes
+  - config
+  selectors:
+  - field: applyToRoutes
+    binds: selects routes inside a RouteTable
+- entity: WasmDeploymentPolicy
+  group: extensions.policy.gloo.solo.io
+  plural: wasmdeploymentpolicies
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - applyToWorkloads
+  - config
+  selectors:
+  - field: applyToWorkloads
+    binds: selects workloads in the mesh
+- entity: Workspace
+  group: admin.gloo.solo.io
+  plural: workspaces
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - workloadClusters
+  selectors:
+  - field: workloadClusters
+    binds: selects the workload clusters and namespaces in the workspace
+- entity: WorkspaceSettings
+  group: admin.gloo.solo.io
+  plural: workspacesettings
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - exportTo
+  - importFrom
+  - options
+- entity: XdsConfig
+  group: internal.gloo.solo.io
+  plural: xdsconfigs
+  versions:
+  - v2
+  scope: Namespaced
+  spec_fields:
+  - types
+  - workloads
+relationships:
+- from: AccessLogPolicy
+  to: Workload
+  type: has_many
+  via: spec.applyToWorkloads
+  binding: selector
+- from: AccessPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: AccessPolicy
+  to: Workload
+  type: has_many
+  via: spec.applyToWorkloads
+  binding: selector
+- from: ActiveHealthCheckPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: AdaptiveRequestConcurrencyPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: ApiProduct
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.targetRef
+  binding: object-reference
+- from: CORSPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: CSRFPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: ClientTLSPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: ConnectionPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: DLPPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: DiscoveredGateway
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.serviceAccountRefs
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: ExtAuthPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.apiKeyAuth.apiKeySecretRefs
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.apiKeyAuth.hmac.sharedSecretRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.apiKeyAuth.k8sSecretApikeyStorage.apiKeySecretRefs
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.hmacAuth.secretRefs
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.hmacAuth.secretRefs.secretRefs
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.ldap.groupLookupSettings.credentialsSecretRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.oauth.clientSecretRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.oauth2.accessTokenValidation.introspection.clientSecretRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.oauth2.oauth2.clientSecretRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.oauth2.oauth2.session.cipherConfig.keyRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.oauth2.oidcAuthorizationCode.clientAuthentication.clientSecret.clientSecretRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.oauth2.oidcAuthorizationCode.clientAuthentication.privateKeyJwt.signingKeyRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.oauth2.oidcAuthorizationCode.clientSecretRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.oauth2.oidcAuthorizationCode.session.cipherConfig.keyRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.passThroughAuth.grpc.tlsConfig.secretRef
+  binding: object-reference
+- from: ExtAuthPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.glooAuth.configs.passThroughAuth.http.tlsConfig.secretRef
+  binding: object-reference
+- from: ExtAuthServer
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.destinationServer.ref
+  binding: object-reference
+- from: ExternalService
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.ports.egressGatewayRoutes.virtualGatewayRefs
+  binding: object-reference
+- from: FailoverPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: FaultInjectionPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: GraphQLAllowedQueryPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: GraphQLPersistedQueryCachePolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: GraphQLResolverMap
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.types.fields.resolvers.grpcResolver.destinations.ref
+  binding: object-reference
+- from: GraphQLResolverMap
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.types.fields.resolvers.restResolver.destinations.ref
+  binding: object-reference
+- from: GraphQLSchema
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.proxied.graphqlServers.ref
+  binding: object-reference
+- from: GraphQLSchema
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.resolved.resolverMapRefs
+  binding: object-reference
+- from: GraphQLSchema
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.schemaRef
+  binding: object-reference
+- from: HTTPBufferPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: HeaderManipulationPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: IssuedCertificate
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.agentCa.vault.caSecretRef
+  binding: object-reference
+- from: IssuedCertificate
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.agentCa.vault.kubernetesAuth.serviceAccountRef
+  binding: object-reference
+- from: IssuedCertificate
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.agentCa.vault.tokenSecretRef
+  binding: object-reference
+- from: IssuedCertificate
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.meshRef
+  binding: object-reference
+- from: IstioLifecycleManager
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.installations.istioController.envVars.valueFrom.configMapKeyRef
+  binding: object-reference
+- from: IstioLifecycleManager
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.installations.istioController.envVars.valueFrom.fieldRef
+  binding: object-reference
+- from: IstioLifecycleManager
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.installations.istioController.envVars.valueFrom.resourceFieldRef
+  binding: object-reference
+- from: IstioLifecycleManager
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.installations.istioController.envVars.valueFrom.secretKeyRef
+  binding: object-reference
+- from: JWTPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: JWTPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: JWTPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.providers.local.secretRef
+  binding: object-reference
+- from: JWTPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.providers.local.secretRef.objectRef
+  binding: object-reference
+- from: JWTPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.providers.remote.destinationRef
+  binding: object-reference
+- from: JWTPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.providers.remote.destinationRef.ref
+  binding: object-reference
+- from: LoadBalancerPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: MirrorPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: MirrorPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.destination.ref
+  binding: object-reference
+- from: OutlierDetectionPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: PodBounceDirective
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.meshRef
+  binding: object-reference
+- from: PodBounceDirective
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.podsToBounce.rootCertSync.configMapRef
+  binding: object-reference
+- from: PodBounceDirective
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.podsToBounce.rootCertSync.secretRef
+  binding: object-reference
+- from: PortalConfig
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.portalRef
+  binding: object-reference
+- from: PortalConfig
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.usagePlans.extAuthPolicies.extAuthPolicyRef
+  binding: object-reference
+- from: PortalConfig
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.usagePlans.rateLimitPolicy.rateLimitPolicyRef
+  binding: object-reference
+- from: ProgressiveDelivery
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.routeTableRef
+  binding: object-reference
+- from: RateLimitPolicy
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: RateLimitPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: RateLimitServerConfig
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.destinationServers.ref
+  binding: object-reference
+- from: RateLimitServerSettings
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.destinationServer.ref
+  binding: object-reference
+- from: RetryTimeoutPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: RootTrustPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.agentCa.vault.caSecretRef
+  binding: object-reference
+- from: RootTrustPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.agentCa.vault.kubernetesAuth.serviceAccountRef
+  binding: object-reference
+- from: RootTrustPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.agentCa.vault.tokenSecretRef
+  binding: object-reference
+- from: RootTrustPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.mgmtServerCa.secretRef
+  binding: object-reference
+- from: RootTrustPolicy
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.config.passiveCertificateAuthorities.secretRef
+  binding: object-reference
+- from: RouteTable
+  to: VirtualDestination|ExternalService|Service
+  type: has_many
+  via: spec.applyToDestinations
+  binding: selector
+- from: RouteTable
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.defaultDestination.ref
+  binding: object-reference
+- from: RouteTable
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.http.forwardTo.destinations.ref
+  binding: object-reference
+- from: RouteTable
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.tcp.forwardTo.destinations.ref
+  binding: object-reference
+- from: RouteTable
+  to: ObjectReference (name/namespace/cluster)
+  type: belongs_to
+  via: spec.tls.forwardTo.destinations.ref
+  binding: object-reference
+- from: TransformationPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: TrimProxyConfigPolicy
+  to: Workload
+  type: has_many
+  via: spec.applyToWorkloads
+  binding: selector
+- from: WAFPolicy
+  to: RouteTable
+  type: has_many
+  via: spec.applyToRoutes
+  binding: selector
+- from: WasmDeploymentPolicy
+  to: Workload
+  type: has_many
+  via: spec.applyToWorkloads
+  binding: selector
+- from: Workspace
+  to: KubernetesCluster
+  type: has_many
+  via: spec.workloadClusters
+  binding: selector

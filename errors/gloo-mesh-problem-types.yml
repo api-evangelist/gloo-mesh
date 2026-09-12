@@ -1,0 +1,105 @@
+generated: '2026-09-12'
+method: derived
+source: >-
+  grpc/gloo-mesh-gloo-solo-io-common-v2-approval-state.proto ,
+  grpc/gloo-mesh-gloo-solo-io-common-v2-status.proto ,
+  https://docs.solo.io/gloo-mesh-enterprise/latest/concepts/about/validation/
+format: kubernetes-status-conditions
+note: >-
+  Gloo Mesh has no HTTP request/response API of its own, so it has no RFC 9457
+  application/problem+json envelope and none is invented here. Its error surface is the
+  Kubernetes one, and it is fully specified: every Gloo custom resource reports an
+  `ApprovalState` plus a human-readable message on `status`, and invalid configuration is
+  rejected at admission before it is ever stored. The enum below is transcribed verbatim from
+  the ApprovalState proto Solo.io publishes; the descriptions are the proto's own comments.
+envelope:
+  path: status.common.state
+  fields:
+    - field: observedGeneration
+      description: >-
+        The most recent generation observed in the object's metadata. If observedGeneration
+        does not match metadata.generation, Gloo Mesh has not processed the most recent
+        version of this object — this is the staleness signal an agent should check before
+        trusting any other status field.
+    - field: approval
+      description: The ApprovalState of the resource (see problems below).
+    - field: message
+      description: Additional human-readable information about the current state of the resource.
+  multi_cluster:
+    field: status.clusters
+    description: >-
+      A map of cluster name to State, so one resource carries a distinct approval state per
+      cluster that receives its configuration. A resource can be ACCEPTED in one cluster and
+      INVALID in another.
+  workspace_rollup:
+    field: status.workspaceConditions
+    description: A map of ApprovalState to the number of workspaces in that condition.
+problems:
+  - code: PENDING
+    numeric: 0
+    title: Not yet processed
+    description: Resources are in a Pending state before they have been processed by Gloo Mesh.
+    remediation: >-
+      Wait and re-read. If it does not clear, compare status.state.observedGeneration to
+      metadata.generation and check the management server logs.
+  - code: ACCEPTED
+    numeric: 1
+    title: Accepted
+    description: >-
+      Resources are in an Accepted state when they are valid and have been applied
+      successfully to the Gloo Mesh configuration.
+    remediation: none — this is the success terminal state
+  - code: INVALID
+    numeric: 2
+    title: Invalid configuration
+    description: >-
+      Resources are in an Invalid state when they contain incorrect configuration parameters,
+      such as missing required values or invalid resource references. An invalid state can
+      also result when a resource's configuration is valid but conflicts with another
+      resource which was accepted at an earlier point in time.
+    remediation: >-
+      Read status.state.message. Re-check the object reference targets (name/namespace/cluster)
+      and look for an earlier-accepted resource that owns the same route or destination.
+  - code: WARNING
+    numeric: 3
+    title: Partially applied
+    description: >-
+      Resources are in a Warning state when they contain partially incorrect configuration
+      parameters, but have still been processed and applied by the system.
+    remediation: >-
+      The resource IS live. Treat as a partial success and read the message before assuming
+      the whole spec took effect.
+  - code: FAILED
+    numeric: 4
+    title: Synchronization failed
+    description: >-
+      Resources are in a Failed state when they contain correct configuration parameters, but
+      the server encountered an error trying to synchronize the system to the desired state.
+    remediation: >-
+      Server-side, not a spec error. Retry is safe (apply is idempotent); check management
+      server and relay health, then meshctl check.
+  - code: UNLICENSED
+    numeric: 5
+    title: Not licensed
+    description: The license key(s) in the application do not allow you to use this resource.
+    remediation: >-
+      The feature requires a product license you do not hold — see
+      https://docs.solo.io/gloo-mesh-enterprise/latest/setup/prepare/licensing/ .
+      Retrying will not change the outcome.
+admission_rejection:
+  mechanism: Kubernetes validating admission webhook
+  docs: https://docs.solo.io/gloo-mesh-enterprise/latest/concepts/about/validation/
+  description: >-
+    Invalid configuration is rejected at apply time and never stored. Two layers: OpenAPI v3
+    schema constraints on single fields, and Common Expression Language (CEL) rules that span
+    multiple fields (Kubernetes 1.25+). Enabled by default.
+  validated_kinds:
+    - ExtAuthPolicy
+    - FaultInjectionPolicy
+    - LoadBalancerPolicy
+    - OutlierDetectionPolicy
+    - RetryTimeoutPolicy
+    - RouteTable
+    - VirtualDestination
+    - VirtualGateway
+  inspect: kubectl explain <Kind>[.spec.<path>] shows the constraints and rules per field

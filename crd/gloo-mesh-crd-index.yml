@@ -1,0 +1,858 @@
+generated: '2026-09-12'
+method: derived
+source: https://storage.googleapis.com/gloo-platform/helm-charts/gloo-platform-crds-2.14.0.tgz
+note: The Gloo Mesh (Gloo Platform APIs) contract is a set of Kubernetes CustomResourceDefinitions, each
+  carrying an OpenAPI v3 structural schema. These were harvested from the first-party gloo-platform-crds
+  Helm chart v2.14.0 published by Solo.io at https://storage.googleapis.com/gloo-platform/helm-charts
+  (the repository the install docs tell you to add). The chart ships them as Helm templates, so each file
+  under crd/ is the chart template RENDERED with the chart's own default values (installEnterpriseCrds=true,
+  disableAdmissionValidation=false, all featureGates on) — the same YAML `helm template` produces. Nothing
+  was authored; the conditional wrappers were evaluated and the raw files under the chart's files/ directory
+  are copied verbatim.
+chart:
+  name: gloo-platform-crds
+  version: 2.14.0
+  repository: https://storage.googleapis.com/gloo-platform/helm-charts
+  crd_annotation_version: 2.14.0
+api_reference: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/api/
+counts:
+  crds: 70
+  api_groups: 13
+  files: 15
+groups:
+- group: admin.gloo.solo.io
+  crd_count: 11
+  files:
+  - crd/gloo-mesh-admin-gloo-solo-io-crds.yaml
+  - crd/gloo-mesh-gatewaylifecyclemanagers-admin-gloo-solo-io-crds.yaml
+  - crd/gloo-mesh-istiolifecyclemanagers-admin-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: Dashboard
+    plural: dashboards
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names: []
+  - kind: ExtAuthServer
+    plural: extauthservers
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ess
+    - eas
+  - kind: GatewayLifecycleManager
+    plural: gatewaylifecyclemanagers
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - glm
+  - kind: InsightsConfig
+    plural: insightsconfigs
+    versions:
+    - v2alpha1
+    served:
+    - v2alpha1
+    storage:
+    - v2alpha1
+    scope: Namespaced
+    short_names: []
+  - kind: IstioLifecycleManager
+    plural: istiolifecyclemanagers
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ilm
+  - kind: KubernetesCluster
+    plural: kubernetesclusters
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - kc
+  - kind: RateLimitServerConfig
+    plural: ratelimitserverconfigs
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - rlsc
+  - kind: RateLimitServerSettings
+    plural: ratelimitserversettings
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - rlss
+  - kind: RootTrustPolicy
+    plural: roottrustpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - rtp
+  - kind: Workspace
+    plural: workspaces
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ws
+  - kind: WorkspaceSettings
+    plural: workspacesettings
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - wss
+- group: apimanagement.gloo.solo.io
+  crd_count: 8
+  files:
+  - crd/gloo-mesh-apimanagement-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: ApiDoc
+    plural: apidocs
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ad
+  - kind: ApiProduct
+    plural: apiproducts
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ap
+  - kind: ApiSchemaDiscovery
+    plural: apischemadiscoveries
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - apischemadiscovery
+  - kind: GraphQLResolverMap
+    plural: graphqlresolvermaps
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - grm
+    - gqlrm
+  - kind: GraphQLSchema
+    plural: graphqlschemas
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - gqls
+  - kind: GraphQLStitchedSchema
+    plural: graphqlstitchedschemas
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - gqlss
+    - gss
+  - kind: Portal
+    plural: portals
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - portal
+  - kind: PortalGroup
+    plural: portalgroups
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - portalgroup
+- group: extauth.solo.io
+  crd_count: 1
+  files:
+  - crd/gloo-mesh-extauth-solo-io-v1-crds.yaml
+  kinds:
+  - kind: AuthConfig
+    plural: authconfigs
+    versions:
+    - v1
+    served:
+    - v1
+    storage:
+    - v1
+    scope: Namespaced
+    short_names:
+    - ac
+- group: extensions.policy.gloo.solo.io
+  crd_count: 1
+  files:
+  - crd/gloo-mesh-extensions-policy-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: WasmDeploymentPolicy
+    plural: wasmdeploymentpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - wdp
+- group: infrastructure.gloo.solo.io
+  crd_count: 2
+  files:
+  - crd/gloo-mesh-infrastructure-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: CloudProvider
+    plural: cloudproviders
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - cp
+  - kind: CloudResources
+    plural: cloudresources
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - cr
+- group: install.istio.io
+  crd_count: 1
+  files:
+  - crd/gloo-mesh-install-istio-io-v1alpha1-crds.yaml
+  kinds:
+  - kind: IstioOperator
+    plural: istiooperators
+    versions:
+    - v1alpha1
+    served:
+    - v1alpha1
+    storage:
+    - v1alpha1
+    scope: Namespaced
+    short_names:
+    - iop
+    - io
+- group: internal.gloo.solo.io
+  crd_count: 10
+  files:
+  - crd/gloo-mesh-internal-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: CertificateRequest
+    plural: certificaterequests
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - cr
+  - kind: DiscoveredCNI
+    plural: discoveredcnis
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - dcni
+  - kind: DiscoveredGateway
+    plural: discoveredgateways
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - dg
+  - kind: IssuedCertificate
+    plural: issuedcertificates
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ic
+  - kind: Mesh
+    plural: meshes
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names: []
+  - kind: PodBounceDirective
+    plural: podbouncedirectives
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - pbd
+  - kind: PortalConfig
+    plural: portalconfigs
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - pcfg
+  - kind: SpireRegistrationEntry
+    plural: spireregistrationentries
+    versions:
+    - v2alpha1
+    served:
+    - v2alpha1
+    storage:
+    - v2alpha1
+    scope: Namespaced
+    short_names:
+    - sreg
+  - kind: VirtualServiceBackup
+    plural: virtualservicebackups
+    versions:
+    - v2alpha1
+    served:
+    - v2alpha1
+    storage:
+    - v2alpha1
+    scope: Namespaced
+    short_names: []
+  - kind: XdsConfig
+    plural: xdsconfigs
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - xc
+- group: networking.gloo.solo.io
+  crd_count: 7
+  files:
+  - crd/gloo-mesh-networking-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: ExternalEndpoint
+    plural: externalendpoints
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ep
+  - kind: ExternalService
+    plural: externalservices
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - es
+  - kind: ExternalWorkload
+    plural: externalworkloads
+    versions:
+    - v2alpha1
+    served:
+    - v2alpha1
+    storage:
+    - v2alpha1
+    scope: Namespaced
+    short_names:
+    - ew
+  - kind: ProgressiveDelivery
+    plural: progressivedeliveries
+    versions:
+    - v2alpha1
+    served:
+    - v2alpha1
+    storage:
+    - v2alpha1
+    scope: Namespaced
+    short_names:
+    - pd
+  - kind: RouteTable
+    plural: routetables
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - rt
+  - kind: VirtualDestination
+    plural: virtualdestinations
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - vd
+  - kind: VirtualGateway
+    plural: virtualgateways
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - vg
+- group: observability.policy.gloo.solo.io
+  crd_count: 1
+  files:
+  - crd/gloo-mesh-observability-policy-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: AccessLogPolicy
+    plural: accesslogpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names: []
+- group: ratelimit.solo.io
+  crd_count: 1
+  files:
+  - crd/gloo-mesh-ratelimit-solo-io-v1alpha1-crds.yaml
+  kinds:
+  - kind: RateLimitConfig
+    plural: ratelimitconfigs
+    versions:
+    - v1alpha1
+    served:
+    - v1alpha1
+    storage:
+    - v1alpha1
+    scope: Namespaced
+    short_names:
+    - rlc
+- group: resilience.policy.gloo.solo.io
+  crd_count: 10
+  files:
+  - crd/gloo-mesh-resilience-policy-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: ActiveHealthCheckPolicy
+    plural: activehealthcheckpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ahcp
+  - kind: AdaptiveRequestConcurrencyPolicy
+    plural: adaptiverequestconcurrencypolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - arcp
+  - kind: ConnectionPolicy
+    plural: connectionpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - cp
+  - kind: FailoverPolicy
+    plural: failoverpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - fp
+  - kind: FaultInjectionPolicy
+    plural: faultinjectionpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - fip
+  - kind: GraphQLPersistedQueryCachePolicy
+    plural: graphqlpersistedquerycachepolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - gqlpq
+    - gqlpqc
+  - kind: ListenerConnectionPolicy
+    plural: listenerconnectionpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - lcp
+  - kind: OutlierDetectionPolicy
+    plural: outlierdetectionpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - odp
+  - kind: RetryTimeoutPolicy
+    plural: retrytimeoutpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - rtp
+  - kind: TrimProxyConfigPolicy
+    plural: trimproxyconfigpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - tpcp
+- group: security.policy.gloo.solo.io
+  crd_count: 9
+  files:
+  - crd/gloo-mesh-security-policy-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: AccessPolicy
+    plural: accesspolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ap
+  - kind: CORSPolicy
+    plural: corspolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - cors
+  - kind: CSRFPolicy
+    plural: csrfpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - csrf
+  - kind: ClientTLSPolicy
+    plural: clienttlspolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - ctls
+  - kind: DLPPolicy
+    plural: dlppolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - dlp
+  - kind: ExtAuthPolicy
+    plural: extauthpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - extauth
+  - kind: GraphQLAllowedQueryPolicy
+    plural: graphqlallowedquerypolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - gqlaq
+    - gqlaqp
+  - kind: JWTPolicy
+    plural: jwtpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - jwt
+  - kind: WAFPolicy
+    plural: wafpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - waf
+- group: trafficcontrol.policy.gloo.solo.io
+  crd_count: 8
+  files:
+  - crd/gloo-mesh-trafficcontrol-policy-gloo-solo-io-crds.yaml
+  kinds:
+  - kind: HTTPBufferPolicy
+    plural: httpbufferpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names: []
+  - kind: HeaderManipulationPolicy
+    plural: headermanipulationpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - hmp
+  - kind: LoadBalancerPolicy
+    plural: loadbalancerpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - lbp
+  - kind: MirrorPolicy
+    plural: mirrorpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - mp
+  - kind: ProxyProtocolPolicy
+    plural: proxyprotocolpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names: []
+  - kind: RateLimitClientConfig
+    plural: ratelimitclientconfigs
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - rlcc
+  - kind: RateLimitPolicy
+    plural: ratelimitpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - rlp
+  - kind: TransformationPolicy
+    plural: transformationpolicies
+    versions:
+    - v2
+    served:
+    - v2
+    storage:
+    - v2
+    scope: Namespaced
+    short_names:
+    - tp

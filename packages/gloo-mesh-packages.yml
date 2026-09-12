@@ -1,0 +1,95 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://docs.solo.io/gloo-mesh-enterprise/latest/setup/install/enterprise_installation/ ,
+  https://storage.googleapis.com/gloo-platform/helm-charts/index.yaml ,
+  https://docs.solo.io/gloo-mesh-enterprise/latest/setup/prepare/meshctl_cli_install/ ,
+  https://proxy.golang.org/github.com/solo-io/solo-apis/@latest
+note: >-
+  Gloo Mesh (Gloo Platform APIs) is self-hosted Kubernetes software, so its first-party
+  distribution is Helm charts, a CLI binary and Go API client packages rather than
+  per-language HTTP SDKs. No official Gloo Mesh client library is published on npm, PyPI,
+  RubyGems, crates.io, Packagist, NuGet or Maven Central; those registries were probed and
+  the names that exist (for example PyPI `meshctl`, a Meshtastic tool by a third party) are
+  not Solo.io packages and are deliberately excluded here.
+packages:
+  - language: n/a
+    registry: helm
+    name: gloo-platform
+    url: https://storage.googleapis.com/gloo-platform/helm-charts/index.yaml
+    install: >-
+      helm repo add gloo-platform https://storage.googleapis.com/gloo-platform/helm-charts
+      && helm upgrade -i gloo-platform gloo-platform/gloo-platform --version 2.14.0
+    official: true
+    version: 2.14.0
+    published: '2026-09-09'
+    published_source: >-
+      Release date published in the Gloo Mesh version support matrix,
+      https://docs.solo.io/gloo-mesh-enterprise/latest/reference/version/versions/ — the
+      `created:` timestamps in the Helm index.yaml were ALL rewritten to 2026-09-09 when the
+      index was regenerated, so they are not per-version release dates and are not used here.
+    description: >-
+      Helm chart for the Gloo Mesh (Gloo Platform APIs) management plane and agents.
+      172 chart versions published in the repository index.
+  - language: n/a
+    registry: helm
+    name: gloo-platform-crds
+    url: https://storage.googleapis.com/gloo-platform/helm-charts/index.yaml
+    install: >-
+      helm upgrade -i gloo-platform-crds gloo-platform/gloo-platform-crds
+      --namespace gloo-mesh --create-namespace --version 2.14.0
+    official: true
+    version: 2.14.0
+    published: '2026-09-09'
+    description: >-
+      Helm chart that installs the 70 Gloo Mesh CustomResourceDefinitions across 13 API
+      groups. This chart IS the machine-readable contract for the Gloo Mesh API surface;
+      the CRDs it carries are saved under crd/ in this repository.
+  - language: go
+    registry: binary
+    name: meshctl
+    url: https://storage.googleapis.com/meshctl/
+    install: curl -sL https://run.solo.io/meshctl/install | GLOO_MESH_VERSION=v2.14.0 sh -
+    official: true
+    version: 2.14.0
+    published: '2026-09-09'
+    description: >-
+      First-party Gloo command line interface. Distributed as OS/arch binaries from a public
+      Google Cloud Storage bucket (https://storage.googleapis.com/meshctl/v2.14.0/meshctl-darwin-amd64),
+      not from a language package registry. Windows is not supported. Command surface is
+      captured in cli/gloo-mesh-cli.yml.
+  - language: go
+    registry: go
+    name: github.com/solo-io/solo-apis
+    url: https://pkg.go.dev/github.com/solo-io/solo-apis
+    install: go get github.com/solo-io/solo-apis
+    official: true
+    version: v1.6.31
+    published: '2021-08-02'
+    decay_note: >-
+      proxy.golang.org reports v1.6.31 (2021-08-02) as the latest SEMVER TAG, which is a
+      Gloo Edge tag, not a Gloo Mesh release. Solo.io maintains the Gloo Mesh API mirror on
+      long-lived BRANCHES rather than tags (`gloo-mesh-v2.13.x` is the newest Gloo Mesh
+      branch; see the repository README), so Go consumers pin a branch pseudo-version.
+      The stale tag date is therefore NOT an abandonment signal for this module, but it does
+      mean `go get` without an explicit pseudo-version resolves to a five-year-old Gloo Edge
+      snapshot.
+    description: >-
+      Read-only mirror of the Solo.io API definitions. The 92 Gloo Mesh protobuf files saved
+      under grpc/ in this repository were harvested from its `gloo-mesh-v2.13.x` branch, which
+      also carries generated Go clients under client-go/.
+registries_probed:
+  - registry: npm
+    result: no first-party Gloo Mesh package found
+  - registry: pypi
+    result: >-
+      no first-party Gloo Mesh package found; `meshctl` on PyPI is an unrelated Meshtastic CLI
+      (github.com/mangelajo/meshctl)
+  - registry: go
+    result: github.com/solo-io/solo-apis (official, branch-maintained)
+  - registry: helm
+    result: gloo-platform, gloo-platform-crds (official)
+  - registry: rubygems
+    result: not probed — no Ruby surface documented by the provider
+  - registry: crates.io
+    result: not probed — no Rust surface documented by the provider

@@ -3,95 +3,51 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Gloo Mesh
 providerId: gloo-mesh
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://docs.solo.io/gloo-mesh-enterprise/latest/ , https://www.solo.io/pricing ,
+  live probe of https://search.solo.io/mcp
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Istio
-  - Kubernetes
-  - Multi-Cluster
-  - Open Source
-  - Service Mesh
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Gloo Mesh API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Gloo Mesh Enterprise
-      - Gloo Mesh Core
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Gloo Mesh Enterprise
-      - Gloo Mesh Core
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Gloo Mesh Enterprise
-      - Gloo Mesh Core
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Gloo Mesh Enterprise
-      - Gloo Mesh Core
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Gloo Mesh Enterprise
-      - Gloo Mesh Core
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+modified: '2026-09-12'
+supersedes: >-
+  The 2026-05-04 bulk-sweep scaffold that asserted five tiered limits (10/100/1000 req-min,
+  1k/100k monthly quotas) and X-RateLimit-* response headers. Solo.io publishes none of that.
+  Removed rather than left to read as published limits (roadmap#35).
+limit_count: 0
+limits: []
+policies: []
+headers: {}
+responseCodes: {}
+note: >-
+  THERE IS NOTHING TO METER. Gloo Mesh is self-hosted software: the API surface is Kubernetes
+  CustomResourceDefinitions running in the customer's own clusters, so requests are served by
+  the customer's own Kubernetes API server and Solo.io neither counts nor throttles them. Any
+  limit that applies is the customer's own Kubernetes API Priority and Fairness configuration,
+  which belongs to the customer, not to this provider. The one Solo.io-operated endpoint in
+  this record — the Docs MCP server at https://search.solo.io/mcp — publishes no limits, and
+  the live responses observed on 2026-09-12 carried no RateLimit-*, X-RateLimit-* or
+  Retry-After header. limit_count 0 is a measured zero, not an unchecked one.
+  Do not confuse this with the product's rate-limiting FEATURE, below: those CRDs are
+  throttling controls Gloo gives the operator for THEIR traffic.
+rate_limiting_as_a_product_capability:
+  note: >-
+    Capability Gloo Mesh provides, not a limit imposed on Gloo Mesh consumers. Listed so the
+    distinction is explicit in the data.
+  crds:
+    - RateLimitPolicy (trafficcontrol.policy.gloo.solo.io/v2)
+    - RateLimitClientConfig (trafficcontrol.policy.gloo.solo.io/v2)
+    - RateLimitServerConfig (admin.gloo.solo.io/v2)
+    - RateLimitServerSettings (admin.gloo.solo.io/v2)
+    - RateLimitConfig (ratelimit.solo.io/v1alpha1)
+  docs: https://docs.solo.io/gloo-mesh-enterprise/latest/security/rate-limit/about/
+evidence:
+  - url: https://search.solo.io/mcp
+    http_status: 200
+    finding: no rate-limit response headers present on initialize or tools/list
+  - url: https://www.solo.io/pricing
+    http_status: 200
+    finding: no quotas or request limits published
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

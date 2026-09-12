@@ -1,41 +1,47 @@
 aid: gloo-mesh
 name: Gloo Mesh
 description: >-
-  Gloo Mesh is an enterprise service mesh management platform from Solo.io
-  built on Istio, providing multi-cluster and multi-mesh traffic management,
-  security policy enforcement, and observability across hybrid cloud
-  environments. It simplifies service mesh operations with a unified control
-  plane and policy management interface, exposing Kubernetes Custom Resource
-  Definitions (CRDs) such as AccessPolicy, JwtPolicy, and RatelimitPolicy as
-  the primary API surface.
+  Gloo Mesh is Solo.io's enterprise service mesh management platform, built on Istio and
+  shipped as Kubernetes software you run in your own clusters. It provides multi-cluster and
+  multi-mesh traffic management, security policy enforcement, workload identity and
+  observability, with a management plane in one cluster and relay-connected agents in each
+  workload cluster. Its API surface is not an HTTP endpoint but 70 Kubernetes Custom Resource
+  Definitions across 13 API groups — AccessPolicy, JWTPolicy, RateLimitPolicy, RouteTable,
+  VirtualDestination, VirtualGateway, Workspace and the rest — each carrying an OpenAPI v3
+  structural schema and CEL validation rules, generated from 92 public protobuf definitions.
+  Solo.io distributes it as the gloo-platform Helm charts and the meshctl CLI, documents it at
+  docs.solo.io/gloo-mesh-enterprise, and runs an unauthenticated remote MCP server over its
+  documentation corpus.
 type: Index
 deliveryModel:
-  model: saas
+  model: self-hosted
   open_source: false
   commercial: true
   callable_host: false
-  label: Hosted service · you call their endpoint
-  confidence: medium
+  label: Self-hosted software · you run it in your own Kubernetes clusters
+  confidence: high
   source:
   - pricing
-  generated: '2026-08-28'
+  - crd
+  - packages
+  generated: '2026-09-12'
   method: derived
 accessModel:
-  pricing: freemium
-  onboarding: unknown
+  pricing: contact-sales
+  onboarding: sales-led
   trial: false
   try_now: false
   public: false
-  label: Freemium
-  confidence: medium
+  label: Contact sales · no published price list
+  confidence: high
   source:
   - plans
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-09-12'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/gloo-mesh.png
 access: 3rd-Party
 created: '2026-04-28'
-modified: '2026-04-28'
+modified: '2026-09-12'
 position: Consuming
 tags:
   - Istio
@@ -43,90 +49,185 @@ tags:
   - Multi-Cluster
   - Open-Source
   - Service Mesh
+  - Envoy
+  - Kubernetes CRDs
+  - Protobuf
+  - Policy Enforcement
+  - Observability
 tags_raw:
   - Istio
   - Kubernetes
   - Multi-Cluster
   - Open Source
   - Service Mesh
+  - Envoy
+  - Kubernetes CRDs
+  - Protobuf
+  - Policy Enforcement
+  - Observability
 url: >-
   https://raw.githubusercontent.com/api-evangelist/gloo-mesh/refs/heads/main/apis.yml
 specificationVersion: '0.23'
+x-api-base:
+  verdict: no-usable-base
+  templated: true
+  note: >-
+    repair-api-bases.py returns no-usable-base for this provider and that verdict is correct,
+    not a gap. Gloo Mesh has no Solo.io-operated HTTP host: its API is served by the
+    CUSTOMER's own Kubernetes API server, so the baseURL on each api entry is deliberately
+    templated (https://{kubernetes-api-server}/apis/). The previous baseURL values were
+    docs.solo.io documentation URLs standing in for an API host. The 13 API group paths under
+    that base are listed in crd/gloo-mesh-crd-index.yml.
 apis:
   - aid: gloo-mesh:gloo-mesh-enterprise
     name: Gloo Mesh Enterprise
     description: >-
-      Gloo Mesh Enterprise (also called Gloo Platform) is a service mesh
-      management platform built on Istio that provides intra-mesh and
-      multi-cluster routing, access policies, JWT authentication, rate
-      limiting, mTLS, fault injection, observability, and more. The platform
-      exposes 100+ Kubernetes Custom Resources as its API surface, deployed
-      via Helm and managed with the meshctl CLI.
-    humanURL: https://www.solo.io/products/gloo-mesh/
-    baseURL: https://docs.solo.io/gloo-mesh-enterprise/latest/
+      Gloo Mesh Enterprise (documented as "Gloo Mesh (Gloo Platform APIs)", current version
+      2.14, released 2026-09-09) is a service mesh management platform built on Istio that
+      provides intra-mesh and multi-cluster routing, access policies, JWT authentication,
+      external auth, rate limiting, mTLS and workload identity, fault injection, failover,
+      progressive delivery and observability. Its contract is 70 Kubernetes CustomResource
+      Definitions across 13 API groups, generated from 92 published proto3 definitions
+      (591 messages, 45 enums, 2 gRPC services). It is deployed with the gloo-platform Helm
+      charts and managed with the meshctl CLI; every write is a declarative Kubernetes apply,
+      validated at admission and reporting an ApprovalState on the resource status.
+    humanURL: https://docs.solo.io/gloo-mesh-enterprise/latest/
+    baseURL: https://{kubernetes-api-server}/apis/
     tags:
       - Istio
       - Kubernetes
       - Multi-Cluster
       - Service Mesh
+      - Kubernetes CRDs
+      - Protobuf
     properties:
       - type: Documentation
         url: https://docs.solo.io/gloo-mesh-enterprise/latest/
       - type: GettingStarted
         url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/
+      - type: APIReference
+        url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/api/
       - type: Reference
         url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/
       - type: ChangeLog
-        url: https://docs.solo.io/gloo-mesh-enterprise/latest/changelog/
+        url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/release-notes/
+      - type: Protobuf
+        url: grpc/gloo-mesh-proto-index.yml
+      - type: x-KubernetesCRD
+        url: crd/gloo-mesh-crd-index.yml
+      - type: SourceCode
+        url: https://github.com/solo-io/solo-apis/tree/gloo-mesh-v2.13.x/api
   - aid: gloo-mesh:gloo-mesh-core
     name: Gloo Mesh Core
     description: >-
-      Gloo Mesh Core extends a single Istio service mesh with insights,
-      operational tooling, and lifecycle management for upstream Istio
-      deployments. It surfaces Istio insights, telemetry, and a curated set
-      of policies to simplify Day 2 operations across a Kubernetes cluster.
-    humanURL: https://www.solo.io/products/gloo-mesh/
-    baseURL: https://docs.solo.io/gloo-mesh-core/latest/
+      Gloo Mesh Core extended a single Istio service mesh with insights, operational tooling
+      and lifecycle management for upstream Istio. Solo.io has RETIRED the standalone Gloo
+      Mesh Core documentation set — docs.solo.io/gloo-mesh-core/ now redirects to
+      docs.solo.io/istio-core/, which returns 404 (probed 2026-09-12) — and folded the
+      capability into the product it markets as Solo Enterprise for Istio, whose live docs are
+      at docs.solo.io/istio/. The Istio insights engine, the analyzer pipeline and the Gloo UI
+      insights view are documented today inside the Gloo Mesh Enterprise doc set. This entry is
+      retained with live pointers rather than dead ones; three dead documentation URLs were
+      removed from it.
+    humanURL: https://www.solo.io/products/istio
+    baseURL: https://{kubernetes-api-server}/apis/
     tags:
       - Istio
       - Kubernetes
       - Service Mesh
+      - Insights
     properties:
       - type: Documentation
-        url: https://docs.solo.io/gloo-mesh-core/latest/
+        url: https://docs.solo.io/istio/
+      - type: Documentation
+        url: https://docs.solo.io/gloo-mesh-enterprise/latest/observability/tools/insights/
       - type: GettingStarted
-        url: https://docs.solo.io/gloo-mesh-core/latest/getting_started/
-      - type: Reference
-        url: https://docs.solo.io/gloo-mesh-core/latest/reference/
+        url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/single/
 common:
+  - type: Website
+    url: https://www.solo.io/
+  - type: DeveloperPortal
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/
+  - type: Documentation
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/
+  - type: APIReference
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/api/
+  - type: GettingStarted
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/
+  - type: Blog
+    url: https://www.solo.io/blog
+  - type: GitHubOrganization
+    url: https://github.com/solo-io
+  - type: ChangeLog
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/release-notes/
+  - type: ChangeLog
+    url: changelog/gloo-mesh-changelog.yml
+  - type: Deprecation
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/version/versions/
+  - type: Lifecycle
+    url: lifecycle/gloo-mesh-lifecycle.yml
+  - type: Community
+    url: https://slack.solo.io/
+  - type: Support
+    url: https://www.solo.io/company/get-support
+  - type: HelpCenter
+    url: https://support.solo.io/
+  - type: Pricing
+    url: https://www.solo.io/pricing
+  - type: SignUp
+    url: https://www.solo.io/get-started
+  - type: TermsOfService
+    url: https://legal.solo.io/#website-terms-of-use
+  - type: PrivacyPolicy
+    url: https://legal.solo.io/#privacy-policy
+  - type: Security
+    url: https://www.solo.io/security
+  - type: TrustCenter
+    url: https://trust.solo.io/
   - type: VulnerabilityDisclosure
     url: security/gloo-mesh-vulnerability-disclosure.yml
   - type: DomainSecurity
     url: security/gloo-mesh-domain-security.yml
-  - type: Website
-    url: https://www.solo.io/
-  - type: Portal
-    url: https://www.solo.io/products/gloo-mesh/
-  - type: Documentation
-    url: https://docs.solo.io/gloo-mesh-enterprise/latest/
-  - type: GettingStarted
-    url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/
-  - type: Blog
-    url: https://www.solo.io/blog/
-  - type: GitHubOrganization
-    url: https://github.com/solo-io
-  - type: ChangeLog
-    url: https://docs.solo.io/gloo-mesh-enterprise/latest/changelog/
-  - type: Community
-    url: https://slack.solo.io/
-  - type: Support
-    url: https://www.solo.io/company/contact/
-  - type: TermsOfService
-    url: https://www.solo.io/legal/terms-of-service/
-  - type: PrivacyPolicy
-    url: https://www.solo.io/legal/privacy-policy/
   - type: Integrations
     url: https://www.solo.io/partners
+  - type: Protobuf
+    url: grpc/gloo-mesh-proto-index.yml
+  - type: x-KubernetesCRD
+    url: crd/gloo-mesh-crd-index.yml
+  - type: HelmChart
+    url: https://storage.googleapis.com/gloo-platform/helm-charts/index.yaml
+  - type: MCPServer
+    url: mcp/gloo-mesh-mcp.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/gloo-mesh-llms.txt
+  - type: Packages
+    url: packages/gloo-mesh-packages.yml
+  - type: SDKs
+    url: packages/gloo-mesh-packages.yml
+  - type: CLI
+    url: cli/gloo-mesh-cli.yml
+  - type: Sandbox
+    url: sandbox/gloo-mesh-sandbox.yml
+  - type: Authentication
+    url: authentication/gloo-mesh-authentication.yml
+  - type: Conventions
+    url: conventions/gloo-mesh-conventions.yml
+  - type: Idempotency
+    url: conventions/gloo-mesh-conventions.yml
+  - type: ErrorCatalog
+    url: errors/gloo-mesh-problem-types.yml
+  - type: Conformance
+    url: conformance/gloo-mesh-conformance.yml
+  - type: DataModel
+    url: data-model/gloo-mesh-data-model.yml
+  - type: Plans
+    url: plans/gloo-mesh-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/gloo-mesh-rate-limits.yml
+  - type: FinOps
+    url: finops/gloo-mesh-finops.yml
 integrations:
   - name: Partner with Solo.io
   - name: AWS logo
@@ -136,3 +237,8 @@ maintainers:
     email: kin@apievangelist.com
 x-parent: gloo
 x-relationship: product
+x-enrichment:
+  date: '2026-09-12'
+  status: enriched
+  artifacts_added: 128
+  pass: local-v3

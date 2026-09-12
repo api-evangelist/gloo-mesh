@@ -1,0 +1,82 @@
+generated: '2026-09-12'
+method: searched
+source: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/version/versions/
+versioning:
+  scheme: semver
+  current: 2.14.0
+  current_released: '2026-09-09'
+  cadence: >-
+    Typically one new minor version, n, each quarter, plus patch releases within each minor.
+  api_versioning: >-
+    Independent of the product version: the Kubernetes CRD groups carry their own apiVersion
+    (v2 for the stable groups, v2alpha1 for InsightsConfig, ExternalWorkload,
+    ProgressiveDelivery, SpireRegistrationEntry and VirtualServiceBackup; v1 for
+    extauth.solo.io and v1alpha1 for ratelimit.solo.io/install.istio.io).
+  docs: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/version/versions/
+support_policy:
+  product: n-3
+  istio_distribution: n-4
+  description: >-
+    Solo supports n-3 for Gloo Mesh (Gloo Platform APIs) and n-4 for Solo distributions of
+    Istio. When a new minor version is released, the previous n-4 (n-5 for Solo Istio) becomes
+    unsupported. The n+1 beta on the main branch is not supported.
+  docs: https://docs.solo.io/gloo-mesh-enterprise/latest/support/about/
+releases:
+  - version: '2.14'
+    released: '2026-09-09'
+    supported: true
+    istio_versions: ['1.31', '1.30', '1.29', '1.28', '1.27']
+  - version: '2.13'
+    released: '2026-05-29'
+    supported: true
+    istio_versions: ['1.30', '1.29', '1.28', '1.27']
+  - version: '2.12'
+    released: '2026-02-24'
+    supported: true
+    istio_versions: ['1.29', '1.28', '1.27']
+  - version: '2.11'
+    released: '2025-11-13'
+    supported: true
+    istio_versions: ['1.28', '1.27']
+deprecation:
+  policy_url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/version/versions/
+  release_notes_url: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/release-notes/
+  sunset_header: false
+  description: >-
+    Removal is announced per release. Each release-notes page carries explicit
+    "Breaking changes" (graded High / Medium / Low), "Removed features" and "Known issues"
+    sections, and the changelog offers a version-to-version comparison so a consumer can see
+    exactly when a change landed. There is no HTTP Sunset/Deprecation header surface because
+    the API is a Kubernetes CRD surface, not an HTTP endpoint.
+  current_removals:
+    - item: Istio 1.27 support
+      note: >-
+        Removed in the release following 2.14 per the release notes; the version support
+        matrix is the authority for what a given Gloo Mesh minor still supports.
+  upgrade_guide: https://docs.solo.io/gloo-mesh-enterprise/latest/setup/upgrade/
+  feature_gates: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/version/feature_gates
+security_lifecycle:
+  cve_lifecycle: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/security_updates/cve-lifecycle
+  cve_scans: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/security_updates/cve-scans
+  description: >-
+    Published five-stage CVE process (Inbound, Tracking, Analysis, Remediation, Reporting).
+    All CRITICAL and HIGH CVEs are tracked; MODERATE/LOW are tracked when materially
+    impactful. Security scan results for product images are published in the product
+    documentation with each release, and Solo.io supports customer FedRAMP scan-response
+    obligations.
+status_page: null
+status_page_note: >-
+  None. status.solo.io does not resolve (DNS failure on probe, 2026-09-12), and no status or
+  uptime page is linked from solo.io, the docs or the support pages. This is consistent with
+  the delivery model: Gloo Mesh runs in the customer's own Kubernetes clusters, so there is no
+  Solo-operated production plane whose uptime could be reported. The one Solo-operated
+  endpoint in this record, the Docs MCP server at search.solo.io/mcp, has no status page either.
+sla:
+  url: https://www.solo.io/company/get-support
+  uptime_target: null
+  note: >-
+    Support is contractual and tiered through Solo Support rather than a published uptime SLA.
+    Support scope and legacy-version support are documented at
+    https://docs.solo.io/gloo-mesh-enterprise/latest/support/about/ ; tickets are filed through
+    https://support.solo.io/ .
+deprecated_operations: []

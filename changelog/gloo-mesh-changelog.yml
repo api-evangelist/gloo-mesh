@@ -1,0 +1,66 @@
+generated: '2026-09-12'
+method: searched
+source: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/release-notes/
+docs:
+  release_notes: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/release-notes/
+  changelog_index: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/
+  gloo_platform_changelog: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/gloo-platform
+  solo_istio_changelog: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/solo-istio
+  version_matrix: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/version/versions
+note: >-
+  Solo.io publishes TWO changelog surfaces for this product and both are dated and versioned:
+  a per-release "Release notes" page with structured Breaking changes / New features /
+  Feature changes / Bug fixes / Removed features / Known issues sections, and a comparison
+  changelog that diffs any two patch or minor versions. A third tracks the Solo distributions
+  of Istio down to individual patch releases (1.27.x through 1.32.x are enumerated). The
+  release notes page previously pointed at by this repository
+  (/gloo-mesh-enterprise/latest/changelog/) now 404s; the live path is under /reference/.
+scheme: semver
+current_version: 2.14.0
+current_released: '2026-09-09'
+severity_grading:
+  - level: high
+    meaning: Severe changes that can impact production and require manual intervention.
+  - level: medium
+    meaning: >-
+      Changes that might impact production and require manual intervention, but possibly not
+      until the next version is released.
+  - level: low
+    meaning: >-
+      Informational updates you might want to implement but that are unlikely to materially
+      impact production.
+entries:
+  - version: '2.14'
+    date: '2026-09-09'
+    breaking: []
+    breaking_note: No high-, medium- or low-severity breaking changes reported for this release.
+    additions:
+      - >-
+        Istio 1.32 support — Gloo Mesh (Gloo Platform APIs) can now run with Istio 1.32.
+    removals:
+      - >-
+        Istio 1.27 support removed in the following release; see the version support matrix.
+    known_issues:
+      - Cluster names must not contain underscores.
+      - >-
+        With Istio 1.27.7 / 1.28.4 / 1.29.0+, installing the management plane outside the
+        gloo-mesh namespace requires that namespace to be listed in
+        DEBUG_ENDPOINT_AUTH_ALLOWED_NAMESPACES on istiod.
+      - Solo distribution of Istio 1.26.0 and 1.26.1 lack FIPS-tagged images; use 1.26.1-patch0+.
+      - >-
+        Istio patch 1.25.1 and 1.24.4 carry an upstream certificate-rotation bug; use 1.25.2 /
+        1.24.5 or later when Gloo Mesh manages root certificate rotation.
+      - Istio, and therefore Gloo Mesh, cannot run on AWS Fargate (no Istio CNI / iptables).
+      - FIPS-compliant builds are not available for the OTel collector agent image.
+      - >-
+        Bulk route name/matcher updates in a RouteTable can delay VirtualService and
+        EnvoyFilter translation, temporarily leaving policies unapplied.
+  - version: '2.13'
+    date: '2026-05-29'
+    source: version support matrix
+  - version: '2.12'
+    date: '2026-02-24'
+    source: version support matrix
+  - version: '2.11'
+    date: '2025-11-13'
+    source: version support matrix

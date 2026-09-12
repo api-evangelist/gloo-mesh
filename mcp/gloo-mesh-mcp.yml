@@ -1,0 +1,80 @@
+generated: '2026-09-12'
+method: searched
+status: published
+source: https://search.solo.io/
+note: >-
+  Solo.io publishes a public, unauthenticated remote MCP server for its documentation
+  corpus. It was discovered from the Gloo Mesh docs UI itself ("Connect to Docs MCP" in the
+  per-page action menu on every docs.solo.io/gloo-mesh-enterprise page, which opens
+  https://search.solo.io/). The endpoint, the tool list and the input schemas below were
+  read from the LIVE server over Streamable HTTP on 2026-09-12 — initialize and tools/list
+  both returned 200 with no credential — not from marketing copy. `gloo-mesh-enterprise` is
+  one of the 15 values of the search tool's `product` enum, so this server is an agent-
+  reachable surface for THIS product specifically, not just for the company in general.
+deployment:
+  mode: remote
+  endpoint: https://search.solo.io/mcp
+  auth: none
+  verified: probed
+server:
+  name: Solo.io - Docs MCP
+  version: 1.0.0
+  website_url: https://solo.io
+  transport: http
+  protocol_version: '2025-06-18'
+  capabilities:
+    logging: {}
+    tools:
+      listChanged: true
+  icons:
+    - src: https://search.solo.io/public/solo.svg
+      mimeType: image/svg+xml
+scope:
+  covers: documentation search and retrieval across the Solo.io product docs corpus
+  does_not_cover: >-
+    the Gloo Mesh control-plane API itself. There is no MCP tool that creates, reads or
+    mutates a Gloo custom resource; the Gloo Mesh API surface is Kubernetes CRDs applied
+    with kubectl/Helm/meshctl (see crd/ and cli/), and the gRPC admin service in grpc/.
+products_searchable:
+  - gloo-mesh-enterprise
+  - solo-enterprise-for-istio
+  - solo-enterprise-for-kagent
+  - solo-enterprise-for-kgateway
+  - solo-enterprise-for-agentgateway
+  - solo-enterprise-for-agentregistry
+  - agentgateway-kubernetes
+  - agentgateway-standalone
+  - agentregistry-oss
+  - kgateway-oss
+  - kagent-oss
+  - gloo-edge
+  - gloo-gateway-v1
+  - gateway-api
+  - agentevals-oss
+tools:
+  - name: search
+    description: >-
+      Semantic search over the documentation for a named Solo.io product. Required
+      arguments: query (string, max 2000 chars) and product (enum of 15 product slugs
+      including gloo-mesh-enterprise). Optional limit (number, default 4). Returns scored
+      results carrying product, version, section, hierarchy, source URL and collection name.
+    input_schema: mcp/gloo-mesh-mcp-tools.json#/tools/0/inputSchema
+  - name: get_chunks
+    description: >-
+      Retrieve sequential segments of a documentation page to fill in context around a
+      search hit. Required: collection, url, startIndex, endIndex.
+    input_schema: mcp/gloo-mesh-mcp-tools.json#/tools/1/inputSchema
+  - name: get_full_page
+    description: >-
+      Retrieve the full markdown content of a documentation page by URL. Required: url.
+      Optional force (boolean) to exceed the 20,000-character limit.
+    input_schema: mcp/gloo-mesh-mcp-tools.json#/tools/2/inputSchema
+tools_raw: mcp/gloo-mesh-mcp-tools.json
+x-evidence:
+  fetched: '2026-09-12'
+  endpoint: https://search.solo.io/mcp
+  initialize_http_status: 200
+  tools_list_http_status: 200
+  content_type: text/event-stream
+  auth_required: false
+  tool_count: 3

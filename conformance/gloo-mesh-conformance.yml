@@ -1,0 +1,129 @@
+generated: '2026-09-12'
+method: derived
+source: >-
+  crd/ (gloo-platform-crds 2.14.0), grpc/ (solo-io/solo-apis gloo-mesh-v2.13.x),
+  mcp/gloo-mesh-mcp.yml, and the Gloo Mesh documentation
+note: >-
+  Standards this contract DECLARES about itself, each with the exact artifact or document it
+  was read from. Nothing here is taken from a marketing claim.
+standards:
+  - id: kubernetes-crd-apiextensions-v1
+    conforms: true
+    evidence: >-
+      All 70 shipped resources are apiVersion apiextensions.k8s.io/v1
+      CustomResourceDefinition objects with OpenAPI v3 structural schemas —
+      crd/gloo-mesh-crd-index.yml.
+  - id: openapi-v3-structural-schema
+    conforms: true
+    evidence: >-
+      Each CRD version carries schema.openAPIV3Schema; the validation docs name it
+      explicitly ("OpenAPI schema validation includes simple constraints for single fields").
+  - id: cel-validation-rules
+    conforms: true
+    evidence: >-
+      Common Expression Language rules across fields on ExtAuthPolicy, FaultInjectionPolicy,
+      LoadBalancerPolicy, OutlierDetectionPolicy, RetryTimeoutPolicy, RouteTable,
+      VirtualDestination, VirtualGateway (Kubernetes 1.25+) —
+      https://docs.solo.io/gloo-mesh-enterprise/latest/concepts/about/validation/
+  - id: protobuf-proto3
+    conforms: true
+    evidence: 92 proto3 files, 591 messages, 45 enums, 2 gRPC services — grpc/gloo-mesh-proto-index.yml
+  - id: grpc
+    conforms: true
+    evidence: >-
+      service GlooAdminService (rpc GetDebugBundle, server-streaming) and service
+      InternalAdmin (rpc ExtWorkloadBootstrap, rpc CaCert) in
+      grpc/gloo-mesh-rpc-solo-io-v2-gloo-admin.proto and
+      grpc/gloo-mesh-rpc-solo-io-v2-internal-admin.proto
+  - id: istio
+    conforms: true
+    evidence: >-
+      The product manages Solo distributions of Istio and translates Gloo CRs into Istio
+      VirtualService / EnvoyFilter configuration; the supported-version matrix pins Istio
+      1.27-1.31 per Gloo Mesh minor.
+  - id: envoy-xds
+    conforms: true
+    evidence: >-
+      XdsConfig CRD (internal.gloo.solo.io/v2) and Envoy-shaped policy vocabulary
+      (TrimProxyConfigPolicy, ProxyProtocolPolicy, AdaptiveRequestConcurrencyPolicy).
+  - id: spiffe
+    conforms: true
+    evidence: >-
+      SpireRegistrationEntry CRD (internal.gloo.solo.io/v2alpha1) plus workload identity and
+      RootTrustPolicy / IssuedCertificate / CertificateRequest.
+  - id: x509-mtls
+    conforms: true
+    evidence: >-
+      Relay mTLS with documented BYO-CA, AWS Private CA and HashiCorp Vault integrations and
+      certificate rotation — setup/prod/certs/.
+  - id: oauth2-oidc
+    conforms: partial
+    evidence: >-
+      Consumed, not served. JWTPolicy validates JWTs and supports claim- and scope-based
+      authorization; ExtAuthPolicy supports OIDC via an external auth server; the Gloo UI can
+      sit behind the customer's OIDC provider. Solo serves no OIDC discovery document of its
+      own — well-known/gloo-mesh-well-known.yml.
+  - id: open-policy-agent
+    conforms: true
+    evidence: >-
+      OPA integration documented three ways (Rego rules in ConfigMaps, OPA sidecar, BYO OPA
+      server) under security/external auth, with an OPA Grafana dashboard.
+  - id: graphql
+    conforms: true
+    evidence: >-
+      GraphQLSchema, GraphQLStitchedSchema, GraphQLResolverMap (apimanagement.gloo.solo.io/v2),
+      GraphQLAllowedQueryPolicy (security.policy) and GraphQLPersistedQueryCachePolicy
+      (resilience.policy); `meshctl generate graphql` scaffolds schemas from gRPC.
+  - id: opentelemetry
+    conforms: true
+    evidence: >-
+      The telemetry pipeline is an OTel collector agent plus telemetry gateway, with
+      customizable pipelines (for example logs/analyzer) —
+      https://docs.solo.io/gloo-mesh-enterprise/latest/observability/
+  - id: model-context-protocol
+    conforms: true
+    evidence: >-
+      Solo.io serves a live MCP server at https://search.solo.io/mcp. Its initialize response,
+      read 2026-09-12, declares protocolVersion 2025-06-18 and a tools capability; tools/list
+      returns 3 tools with JSON Schema draft-07 inputSchemas — mcp/gloo-mesh-mcp-tools.json.
+  - id: json-schema-draft-07
+    conforms: true
+    evidence: The MCP tool inputSchemas declare $schema http://json-schema.org/draft-07/schema#
+  - id: llms-txt
+    conforms: true
+    evidence: >-
+      https://docs.solo.io/gloo-mesh-enterprise/llms.txt returns 200 text/plain and indexes the
+      product documentation by section — saved verbatim as llms/gloo-mesh-llms.txt
+  - id: fips-140-2
+    conforms: partial
+    evidence: >-
+      Solo publishes FIPS-compliant hardened images for Istio and documents a FIPS setup path
+      (setup/prod/fips/). The release notes also record the gap honestly: FIPS-compliant builds
+      are NOT available for the OTel collector agent image, and Solo Istio 1.26.0/1.26.1 lack
+      FIPS-tagged images. Recorded as an image-build claim, not a certification.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Not applicable — there is no HTTP API of Solo's own to carry a problem+json envelope.
+      The error surface is Kubernetes status conditions; see errors/gloo-mesh-problem-types.yml.
+  - id: asyncapi
+    conforms: false
+    evidence: No event or webhook contract is published for the Gloo Mesh API surface.
+  - id: a2a-agent-card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json 404 on solo.io, www.solo.io,
+      docs.solo.io and search.solo.io (probed 2026-09-12).
+compliance_program:
+  trust_center: https://trust.solo.io/
+  security_policy: https://www.solo.io/security
+  cve_process: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/security_updates/cve-lifecycle
+  named_certifications: []
+  named_certifications_note: >-
+    NOT ASSERTED. Solo.io runs a Vanta-hosted Trust Center at trust.solo.io, but its contents
+    render client-side and no certification name could be read from the served HTML on
+    2026-09-12. FedRAMP appears in the CVE-lifecycle documentation only as an obligation Solo
+    supports for CUSTOMERS who are subject to it ("customers with regulatory requirements for
+    regular scans (e.g. FedRAMP) submit their scan output to Solo.io for vendor remediation
+    response") — that is not a claim that Solo.io holds a FedRAMP authorization, and it is not
+    recorded as one. No Compliance pointer is emitted from this file.

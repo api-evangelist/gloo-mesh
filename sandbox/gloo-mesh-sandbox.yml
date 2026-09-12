@@ -1,0 +1,67 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://www.solo.io/resources/lab , https://www.solo.io/resources/workshops ,
+  https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/
+note: >-
+  There is no test-vs-live key mode, no test card and no hosted sandbox tenant, because there
+  is no Solo-operated endpoint to call. What Solo.io provides instead — and it is the right
+  equivalent for self-hosted infrastructure software — is hosted hands-on labs, workshops, and
+  a documented local getting-started path that stands the whole product up on your own
+  clusters. No test credential values are published, so none are recorded here.
+modes: []
+test_credentials: []
+sandboxes:
+  - kind: hosted-lab
+    name: Solo Labs
+    url: https://www.solo.io/resources/lab
+    description: >-
+      Browser-based guided labs, filterable by product (the filter carries a "Gloo Mesh"
+      value alongside istio, kgateway, agentgateway, kagent and agentregistry). Each lab runs
+      against provisioned clusters rather than the reader's own.
+    access: free, registration-gated
+  - kind: workshop
+    name: Solo Workshops
+    url: https://www.solo.io/resources/workshops
+    description: Longer instructor-led and self-paced workshop tracks.
+    access: free, registration-gated
+  - kind: local-install
+    name: Getting started, single cluster
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/single/gs_single/
+    description: >-
+      Documented path to install the management plane and an agent, deploy the Bookinfo sample
+      apps, apply a policy and open the Gloo UI on a single cluster you control.
+    access: public docs; requires a Solo license key for the enterprise components
+  - kind: local-install
+    name: Getting started, multicluster
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/multi/gs_multi/
+    description: >-
+      Multicluster walkthrough — set up the management plane, deploy sample apps, configure
+      routing across clusters, apply a policy, then federate clusters and isolate workloads
+      for multitenancy.
+    access: public docs; requires a Solo license key
+  - kind: sample-apps
+    name: Bookinfo and other sample applications
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/single/sample-apps/
+    description: The sample workloads the getting-started and policy walkthroughs route to.
+  - kind: dry-run
+    name: Offline configuration validation
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/concepts/about/validation/
+    description: >-
+      `meshctl experimental validate resources` checks Gloo custom resources against the
+      shipped schema and CEL rules WITHOUT applying them — the closest thing this API has to a
+      sandbox request. See conventions/gloo-mesh-conventions.yml#dry_run_mode.
+  - kind: open-source
+    name: Upstream open-source projects
+    url: https://github.com/solo-io
+    description: >-
+      Istio, kgateway, agentgateway and kagent can be run with no license at all; the
+      enterprise Gloo Mesh CRDs cannot.
+  - kind: agent-surface
+    name: Docs MCP server
+    url: https://search.solo.io/mcp
+    description: >-
+      Callable right now with no credential — the only Solo.io endpoint in this record an
+      agent can exercise unauthenticated. See mcp/gloo-mesh-mcp.yml.
+license_required: true
+license_docs: https://docs.solo.io/gloo-mesh-enterprise/latest/setup/prepare/licensing/

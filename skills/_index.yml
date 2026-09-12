@@ -1,0 +1,24 @@
+generated: '2026-09-12'
+method: generated
+source: >-
+  Grounded in verified artifacts in this repository — real MCP tool names and argument schemas
+  read live from https://search.solo.io/mcp, real CRD kinds and spec fields read from the
+  gloo-platform-crds 2.14.0 chart, real ApprovalState values transcribed from the published
+  protobuf, and real meshctl subcommands from the docs CLI reference. No operation name in
+  these skills was invented.
+note: >-
+  Gloo Mesh publishes no OpenAPI, so these skills are grounded in the contracts it DOES
+  publish: Kubernetes CRDs (crd/), protobuf (grpc/) and a live MCP server (mcp/).
+skills:
+  - name: gloo-mesh-search-product-docs
+    file: skills/gloo-mesh-search-product-docs.md
+    surface: Docs MCP (https://search.solo.io/mcp)
+    operations: [search, get_chunks, get_full_page]
+  - name: gloo-mesh-apply-a-policy
+    file: skills/gloo-mesh-apply-a-policy.md
+    surface: Kubernetes CRDs (security / trafficcontrol / resilience / observability policy groups)
+    operations: [kubectl apply, meshctl experimental validate resources, kubectl get -o yaml, kubectl delete]
+  - name: gloo-mesh-register-a-workload-cluster
+    file: skills/gloo-mesh-register-a-workload-cluster.md
+    surface: meshctl + admin.gloo.solo.io/v2 KubernetesCluster
+    operations: [meshctl cluster register, meshctl cluster list, meshctl check, meshctl cluster deregister]

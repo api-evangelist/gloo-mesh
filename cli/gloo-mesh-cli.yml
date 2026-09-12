@@ -1,0 +1,94 @@
+generated: '2026-09-12'
+method: searched
+source: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/cli/meshctl
+name: meshctl
+version: 2.14.0
+description: >-
+  meshctl is the first-party Gloo command line interface used to install, register, inspect
+  and debug a Gloo Mesh (Gloo Platform APIs) environment. It is the primary human and script
+  entry point to the product alongside Helm and kubectl; it reads your kubeconfig contexts
+  rather than authenticating against a Solo-operated endpoint.
+docs:
+  install: https://docs.solo.io/gloo-mesh-enterprise/latest/setup/prepare/meshctl_cli_install/
+  reference: https://docs.solo.io/gloo-mesh-enterprise/latest/reference/cli/meshctl
+install:
+  - method: script
+    command: curl -sL https://run.solo.io/meshctl/install | sh
+    note: Linux and macOS. Windows is not currently supported.
+  - method: script-pinned
+    command: curl -sL https://run.solo.io/meshctl/install | GLOO_MESH_VERSION=v2.14.0 sh -
+  - method: direct-download
+    command: https://storage.googleapis.com/meshctl/v2.14.0/meshctl-darwin-amd64
+    note: >-
+      The installer resolves OS/arch and downloads from the public
+      https://storage.googleapis.com/meshctl/ bucket. run.solo.io/meshctl/install 302s to
+      https://storage.googleapis.com/meshctl-releases/install.sh.
+path: $HOME/.gloo-mesh/bin
+skew_policy: >-
+  Documented on the install page — keep the meshctl client version aligned with the installed
+  Gloo Mesh version; operators running several environments are advised to keep per-version
+  binaries in separate directories and alias them.
+commands:
+  - group: install and lifecycle
+    commands:
+      - meshctl install
+      - meshctl uninstall
+      - meshctl migrate
+      - meshctl migrate helm
+      - meshctl migrate helm-values
+      - meshctl precheck
+  - group: cluster registration
+    commands:
+      - meshctl cluster
+      - meshctl cluster register
+      - meshctl cluster deregister
+      - meshctl cluster list
+  - group: inspect and verify
+    commands:
+      - meshctl check
+      - meshctl check server
+      - meshctl get
+      - meshctl get insights
+      - meshctl version
+      - meshctl license
+      - meshctl license check
+  - group: debug and support
+    commands:
+      - meshctl debug
+      - meshctl debug report
+      - meshctl logs
+      - meshctl proxy
+      - meshctl dashboard
+  - group: external workloads (VMs)
+    commands:
+      - meshctl external-workload
+      - meshctl external-workload install
+      - meshctl external-workload onboard
+      - meshctl external-workload uninstall
+      - meshctl external-workload generate-token
+      - meshctl external-workload bug-report
+  - group: generate
+    commands:
+      - meshctl generate
+      - meshctl generate graphql
+      - meshctl generate graphql grpc
+  - group: experimental
+    commands:
+      - meshctl experimental
+      - meshctl experimental validate
+      - meshctl experimental validate resources
+      - meshctl experimental validate resources clean
+      - meshctl experimental dump-reports
+      - meshctl experimental interop-check
+      - meshctl experimental switch-active
+key_flows:
+  - flow: Verify an environment
+    commands: [meshctl check, meshctl check server]
+  - flow: Register a workload cluster with the management plane
+    commands: [meshctl cluster register, meshctl cluster list]
+  - flow: Dry-run configuration before applying it
+    commands: [meshctl experimental validate resources]
+  - flow: Collect a support bundle
+    commands: [meshctl debug report]
+  - flow: Open the Gloo UI
+    commands: [meshctl dashboard]

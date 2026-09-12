@@ -1,0 +1,123 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://docs.solo.io/gloo-mesh-enterprise/latest/concepts/about/validation/ ,
+  https://docs.solo.io/gloo-mesh-enterprise/latest/concepts/about/concepts/ ,
+  crd/ (gloo-platform-crds 2.14.0), grpc/ (solo-io/solo-apis gloo-mesh-v2.13.x)
+note: >-
+  Cross-cutting runtime semantics for the Gloo Mesh API surface. This is a DECLARATIVE
+  Kubernetes API, not an HTTP CRUD API, so several of the usual dimensions resolve
+  differently and that is recorded here rather than left blank.
+auth_style:
+  style: kubernetes-rbac
+  detail: >-
+    Authenticate to the cluster, not to Solo. Authorization is Kubernetes RBAC over the Gloo
+    CRD groups. See authentication/gloo-mesh-authentication.yml.
+idempotency:
+  supported: true
+  coverage: full
+  mechanism: declarative apply
+  detail: >-
+    Every mutating operation on this API is a Kubernetes apply of a named object
+    (apiVersion + kind + namespace + name). Re-applying identical YAML produces the identical
+    stored object and no additional effect, across the whole surface — all 70 CRDs in all 13
+    groups, with no exceptions and no opt-in. There is no Idempotency-Key header because there
+    is no request that could be replayed into a duplicate: the object name IS the idempotency
+    key. Concurrency is handled by metadata.resourceVersion optimistic concurrency, and
+    convergence is observable through status.state.observedGeneration, which an agent can
+    compare to metadata.generation to know whether its write has been processed yet.
+  key_field: metadata.name (+ metadata.namespace, and `cluster` on cross-cluster references)
+  concurrency_control: metadata.resourceVersion (optimistic concurrency)
+  convergence_signal: status.state.observedGeneration vs metadata.generation
+  retention: >-
+    n/a — state is the stored object, not a cached response, so there is no replay window to
+    expire.
+dry_run_mode:
+  supported: true
+  detail: >-
+    Two published mechanisms. (1) Admission validation runs automatically on apply and rejects
+    invalid configuration before it is stored — OpenAPI v3 schema constraints plus CEL rules
+    across fields, enabled by default for ExtAuthPolicy, FaultInjectionPolicy,
+    LoadBalancerPolicy, OutlierDetectionPolicy, RetryTimeoutPolicy, RouteTable,
+    VirtualDestination and VirtualGateway. (2) Validation can be run MANUALLY before applying,
+    with `meshctl experimental validate resources`, and Kubernetes' own `--dry-run=server`
+    exercises the same webhook. `kubectl explain <Kind>` prints the constraints per field.
+  docs: https://docs.solo.io/gloo-mesh-enterprise/latest/concepts/about/validation/
+reversibility:
+  grade: documented
+  detail: >-
+    Every write to this API is reversible by construction and Solo documents the teardown
+    path, but NO published time window bounds any reversal, so this grades `documented` rather
+    than `verified`. Do not read a window into it: none is stated in the docs.
+  operations:
+    - surface: any Gloo custom resource
+      reversal: kubectl delete <Kind> <name> / re-apply the previous manifest
+      window: none stated
+      note: >-
+        Deletion removes the desired state; the control plane re-translates and the Istio
+        configuration it generated is withdrawn. Recovery of the prior state depends on the
+        operator holding the previous manifest (GitOps), not on a Gloo-side undo buffer.
+    - surface: an installation or upgrade
+      reversal: helm rollback / helm upgrade to the previous chart version
+      window: none stated
+      docs: https://docs.solo.io/gloo-mesh-enterprise/latest/setup/upgrade/
+    - surface: whole environment
+      reversal: >-
+        meshctl cluster deregister, then helm uninstall of gloo-platform and
+        gloo-platform-crds; Istio teardown is a documented, ordered prerequisite
+      window: none stated
+      docs: https://docs.solo.io/gloo-mesh-enterprise/latest/setup/uninstall/
+    - surface: Gloo Operator managed Istio
+      reversal: kubectl delete ServiceMeshController managed-istio
+      window: none stated
+    - surface: progressive delivery rollout
+      reversal: ProgressiveDelivery CRD (networking.gloo.solo.io/v2alpha1)
+      window: none stated
+      note: >-
+        A canary/progressive rollout is the product's own staged-change mechanism; the CRD is
+        in crd/gloo-mesh-networking-gloo-solo-io-crds.yaml.
+  not_reversible:
+    - >-
+      Deleting the gloo-platform-crds release removes the CRDs and therefore every stored
+      custom resource of those kinds. The uninstall guide sequences this deliberately.
+pagination:
+  style: kubernetes-list-continue
+  detail: >-
+    Inherited from the Kubernetes API: list calls accept `limit` and return a `continue`
+    token in metadata. Gloo defines no pagination of its own.
+field_selection:
+  detail: >-
+    Kubernetes label selectors and field selectors on list/watch. Within the Gloo API itself,
+    resources are bound to each other by SELECTORS rather than by ID lists — policies carry
+    applyToDestinations / applyToRoutes / applyToWorkloads, and Workspaces carry
+    workloadClusters. See data-model/gloo-mesh-data-model.yml.
+metadata:
+  detail: >-
+    Standard Kubernetes metadata.labels and metadata.annotations. Gloo stamps
+    crd.solo.io/specHash and crd.solo.io/version on the CRDs themselves, and labels them
+    app=gloo-mesh-apis.
+request_id_tracing:
+  detail: >-
+    Not a request-level concern for the config API. For the data plane Gloo ships a full
+    OpenTelemetry pipeline (collector agents plus a telemetry gateway) with Jaeger, Grafana
+    and Datadog integrations, and AccessLogPolicy controls access logging.
+  docs: https://docs.solo.io/gloo-mesh-enterprise/latest/observability/
+versioning:
+  detail: >-
+    Per-group apiVersion (v2 stable, v2alpha1 for alpha kinds) independent of the product
+    semver. See lifecycle/gloo-mesh-lifecycle.yml.
+error_envelope:
+  detail: >-
+    status.state {observedGeneration, approval, message} with an ApprovalState enum, plus a
+    per-cluster status.clusters map. Full catalog in errors/gloo-mesh-problem-types.yml.
+rate_limit_signaling:
+  detail: >-
+    None from Solo. Gloo Mesh does not meter or throttle its consumers; the RateLimitPolicy /
+    RateLimitClientConfig / RateLimitServerConfig CRDs are a capability Gloo gives you to
+    throttle YOUR traffic. See rate-limits/gloo-mesh-rate-limits.yml.
+cross_links:
+  errors: errors/gloo-mesh-problem-types.yml
+  lifecycle: lifecycle/gloo-mesh-lifecycle.yml
+  authentication: authentication/gloo-mesh-authentication.yml
+  rate_limits: rate-limits/gloo-mesh-rate-limits.yml
+  data_model: data-model/gloo-mesh-data-model.yml

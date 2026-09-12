@@ -3,159 +3,62 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Gloo Mesh
 providerId: gloo-mesh
+generated: '2026-09-12'
+method: searched
+source: https://www.solo.io/pricing
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Istio
-  - Kubernetes
-  - Multi-Cluster
-  - Open Source
-  - Service Mesh
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
-plans:
-  - id: gloo-mesh-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Gloo Mesh API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://docs.solo.io/gloo-mesh-enterprise/latest/
-          - https://docs.solo.io/gloo-mesh-core/latest/
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://docs.solo.io/gloo-mesh-enterprise/latest/
-          - https://docs.solo.io/gloo-mesh-core/latest/
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Gloo Mesh Enterprise
-      - name: Gloo Mesh Core
-  - id: gloo-mesh-pro
-    name: Professional
-    type: paid
-    description: Production tier for Gloo Mesh. Provides higher quotas, priority support, and access to
-      the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://docs.solo.io/gloo-mesh-enterprise/latest/
-          - https://docs.solo.io/gloo-mesh-core/latest/
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://docs.solo.io/gloo-mesh-enterprise/latest/
-          - https://docs.solo.io/gloo-mesh-core/latest/
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://docs.solo.io/gloo-mesh-enterprise/latest/
-          - https://docs.solo.io/gloo-mesh-core/latest/
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Gloo Mesh Enterprise
-      - name: Gloo Mesh Core
-  - id: gloo-mesh-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Gloo Mesh. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://docs.solo.io/gloo-mesh-enterprise/latest/
-          - https://docs.solo.io/gloo-mesh-core/latest/
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://docs.solo.io/gloo-mesh-enterprise/latest/
-          - https://docs.solo.io/gloo-mesh-core/latest/
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Gloo Mesh Enterprise
-      - name: Gloo Mesh Core
+modified: '2026-09-12'
+supersedes: >-
+  The 2026-05-04 bulk-sweep scaffold that asserted Free / Professional / Enterprise tiers with
+  a 1,000-request monthly quota and a 10 req/min rate limit. None of that came from Solo.io.
+  It has been removed rather than left to read as published pricing (roadmap#35).
+plan_count: 0
+plans: []
+pricing_model: contact-sales
+note: >-
+  Solo.io publishes NO price list and NO named tiers for Gloo Mesh. The pricing page states it
+  directly: "Pricing at Solo depends on your environment and use case. There's no single price
+  list because no two deployments look the same. Whether you're running a single cluster or
+  managing infrastructure across dozens, we'll scope pricing around what you're actually
+  building." The only call to action is "Get an Estimate", a form that routes to a specialist.
+  What IS published is the LICENSE model rather than the price: Solo sells separate product
+  licenses (Gloo Mesh (Gloo Platform APIs), Gloo Mesh Gateway, Solo Enterprise for Istio) and
+  the docs describe precisely which capabilities each one unlocks, with unlicensed resources
+  reporting ApprovalState UNLICENSED rather than failing silently. An honest plan_count of 0
+  is the correct record here — there are no tiers to enumerate.
+licensing:
+  docs: https://docs.solo.io/gloo-mesh-enterprise/latest/setup/prepare/licensing/
+  model: per-product license keys supplied through Helm values (license.value or license.secretRef)
+  products:
+    - name: Gloo Mesh (Gloo Platform APIs)
+      unlocks: >-
+        Multicluster Istio management, hardened FIPS-compliant Istio images with n-4 support,
+        multitenancy and workspaces, service isolation, federation, east-west traffic
+        management, Gloo CRs for internal mesh routing and policy.
+    - name: Solo Enterprise for Istio
+      unlocks: >-
+        Hardened FIPS-compliant Istio images with n-4 support, Istio lifecycle management, and
+        the insights engine that analyzes an Istio setup for health, security and resiliency.
+    - name: Gloo Mesh Gateway
+      unlocks: >-
+        Advanced ingress routing — cloud resources and AWS Lambda, TLS for ingress routes, and
+        the external auth, rate limiting and developer portal add-ons for non-mesh ingress.
+  unlicensed_behavior: >-
+    A resource the license does not cover reports ApprovalState UNLICENSED on its status —
+    see errors/gloo-mesh-problem-types.yml.
+free_access:
+  - what: Open-source Istio, kgateway, agentgateway, kagent
+    url: https://github.com/solo-io
+  - what: Free hands-on labs and workshops
+    url: https://www.solo.io/resources/lab
+  - what: Product documentation, fully public, no login
+    url: https://docs.solo.io/gloo-mesh-enterprise/latest/
+  - what: Docs MCP server, no authentication
+    url: https://search.solo.io/mcp
+evidence:
+  - url: https://www.solo.io/pricing
+    http_status: 200
+    finding: no tiers, no prices, contact-sales estimate form only
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
