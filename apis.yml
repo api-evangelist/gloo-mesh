@@ -14,17 +14,19 @@ description: >-
   documentation corpus.
 type: Index
 deliveryModel:
-  model: self-hosted
-  open_source: false
+  model: saas
+  license_evidence:
+    not_product:
+    - solo-io/solo-apis
+  open_source: unknown
   commercial: true
   callable_host: false
-  label: Self-hosted software · you run it in your own Kubernetes clusters
-  confidence: high
+  label: Hosted service · you call their endpoint
+  confidence: low
   source:
   - pricing
-  - crd
-  - packages
-  generated: '2026-09-12'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: contact-sales
@@ -47,7 +49,7 @@ tags:
   - Istio
   - Kubernetes
   - Multi-Cluster
-  - Open-Source
+  - Open Source
   - Service Mesh
   - Envoy
   - Kubernetes CRDs
@@ -65,6 +67,7 @@ tags_raw:
   - Protobuf
   - Policy Enforcement
   - Observability
+  - Open-Source
 url: >-
   https://raw.githubusercontent.com/api-evangelist/gloo-mesh/refs/heads/main/apis.yml
 specificationVersion: '0.23'
