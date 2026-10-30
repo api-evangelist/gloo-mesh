@@ -1,4 +1,4 @@
-# Gloo Mesh (gloo-mesh)
+# Gloo Mesh
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,74 +64,126 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Gloo Mesh is an enterprise service mesh management platform from Solo.io built on Istio, providing multi-cluster and multi-mesh traffic management, security policy enforcement, and observability across hybrid cloud environments. It simplifies service mesh operations with a unified control plane and policy management interface, exposing Kubernetes Custom Resource Definitions (CRDs) such as AccessPolicy, JwtPolicy, and RatelimitPolicy as the primary API surface.
+Gloo Mesh is Solo.io's enterprise service mesh management platform, built on Istio and shipped as Kubernetes software you run in your own clusters. It provides multi-cluster and multi-mesh traffic management, security policy enforcement, workload identity and observability, with a management plane in one cluster and relay-connected agents in each workload cluster. Its API surface is not an HTTP endpoint but 70 Kubernetes Custom Resource Definitions across 13 API groups — AccessPolicy, JWTPolicy, RateLimitPolicy, RouteTable, VirtualDestination, VirtualGateway, Workspace and the rest — each carrying an OpenAPI v3 structural schema and CEL validation rules, generated from 92 public protobuf definitions. Solo.io distributes it as the gloo-platform Helm charts and the meshctl CLI, documents it at docs.solo.io/gloo-mesh-enterprise, and runs an unauthenticated remote MCP server over its documentation corpus.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/gloo-mesh/refs/heads/main/apis.yml)
+**Areas:** Istio · Kubernetes · Multi-Cluster · Open Source · Service Mesh · Envoy · Kubernetes CRDs · Protobuf · Policy Enforcement · Observability
 
-## Scope
+## Gloo Mesh on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Gloo Mesh is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/gloo-mesh/](https://apis.io/providers/gloo-mesh/)** — or go straight to one of the APIs or properties below.
 
-## Tags:
+### APIs (2)
 
- - Istio, Kubernetes, Multi-Cluster, Open Source, Service Mesh
+- [Gloo Mesh Enterprise](https://apis.io/apis/gloo-mesh/gloo-mesh-enterprise/) — Gloo Mesh Enterprise (documented as "Gloo Mesh (Gloo Platform APIs)", current version 2.14, released 2026-09-09) is a service mesh management platform built…
+- [Gloo Mesh Core](https://apis.io/apis/gloo-mesh/gloo-mesh-core/) — Gloo Mesh Core extended a single Istio service mesh with insights, operational tooling and lifecycle management for upstream Istio. Solo.io has RETIRED the…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-04-28
-- **Modified:** 2026-04-28
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Gloo Mesh Enterprise
-Gloo Mesh Enterprise (also called Gloo Platform) is a service mesh management platform built on Istio that provides intra-mesh and multi-cluster routing, access policies, JWT authentication, rate limiting, mTLS, fault injection, observability, and more. The platform exposes 100+ Kubernetes Custom Resources as its API surface, deployed via Helm and managed with the meshctl CLI.
+Model Context Protocol servers that expose the API to agents.
 
-**Human URL:** [https://www.solo.io/products/gloo-mesh/](https://www.solo.io/products/gloo-mesh/)
+- [Solo.io - Docs MCP](https://apis.io/servers/gloo-mesh/solo-io---docs-mcp/)
 
-#### Tags:
+#### Security (4)
 
- - Istio, Kubernetes, Multi-Cluster, Service Mesh
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Gloo Mesh Authentication](https://apis.io/security/gloo-mesh/gloo-mesh-authentication/)
+- [Gloo Mesh Domain Security](https://apis.io/security/gloo-mesh/gloo-mesh-domain-security/)
+- [Gloo Mesh Trust Center](https://apis.io/security/gloo-mesh/gloo-mesh-trust-center/)
+- [Gloo Mesh Vulnerability Disclosure](https://apis.io/security/gloo-mesh/gloo-mesh-vulnerability-disclosure/)
 
-- [Documentation](https://docs.solo.io/gloo-mesh-enterprise/latest/)
-- [Getting Started](https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/)
-- [Reference](https://docs.solo.io/gloo-mesh-enterprise/latest/reference/)
-- [Change Log](https://docs.solo.io/gloo-mesh-enterprise/latest/changelog/)
+#### Plans and pricing (1)
 
-### Gloo Mesh Core
-Gloo Mesh Core extends a single Istio service mesh with insights, operational tooling, and lifecycle management for upstream Istio deployments. It surfaces Istio insights, telemetry, and a curated set of policies to simplify Day 2 operations across a Kubernetes cluster.
+Published plans, tiers and prices.
 
-**Human URL:** [https://www.solo.io/products/gloo-mesh/](https://www.solo.io/products/gloo-mesh/)
+- [Gloo Mesh Plans Pricing](https://apis.io/plans/gloo-mesh/gloo-mesh-plans-pricing/)
 
-#### Tags:
+#### Rate limits (1)
 
- - Istio, Kubernetes, Service Mesh
+Published request limits.
 
-#### Properties
+- [Gloo Mesh Rate Limits](https://apis.io/rate-limits/gloo-mesh/gloo-mesh-rate-limits/)
 
-- [Documentation](https://docs.solo.io/gloo-mesh-core/latest/)
-- [Getting Started](https://docs.solo.io/gloo-mesh-core/latest/getting_started/)
-- [Reference](https://docs.solo.io/gloo-mesh-core/latest/reference/)
+#### FinOps (1)
 
-## Common Properties
+What the API costs to run, by operation.
+
+- [Gloo Mesh Finops](https://apis.io/finops/gloo-mesh/gloo-mesh-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.solo.io/)
-- [Portal](https://www.solo.io/products/gloo-mesh/)
 - [Documentation](https://docs.solo.io/gloo-mesh-enterprise/latest/)
-- [Getting Started](https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/)
-- [Blog](https://www.solo.io/blog/)
-- [GitHub Organization](https://github.com/solo-io)
-- [Change Log](https://docs.solo.io/gloo-mesh-enterprise/latest/changelog/)
-- [Community](https://slack.solo.io/)
-- [Support](https://www.solo.io/company/contact/)
-- [Terms of Service](https://www.solo.io/legal/terms-of-service/)
-- [Privacy Policy](https://www.solo.io/legal/privacy-policy/)
+- [Getting started](https://docs.solo.io/gloo-mesh-enterprise/latest/getting_started/)
+- [API reference](https://docs.solo.io/gloo-mesh-enterprise/latest/reference/api/)
+- [Pricing](https://www.solo.io/pricing)
+- [Sign up](https://www.solo.io/get-started)
+- [Support](https://www.solo.io/company/get-support)
+- [Changelog](https://docs.solo.io/gloo-mesh-enterprise/latest/reference/changelog/release-notes/)
+- [Blog](https://www.solo.io/blog)
+- [Security](https://www.solo.io/security)
+- [Trust centre](https://trust.solo.io/)
+- [Terms of service](https://legal.solo.io/#website-terms-of-use)
+- [Privacy policy](https://legal.solo.io/#privacy-policy)
+- [GitHub](https://github.com/solo-io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
+**Kin Score 45.8** — developing · rubric 0.25.0 · scored 2026-10-23
 
-**Email:** kin@apievangelist.com
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 24.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 80.4 |
+| Access clarity | 42.1 |
+
+**Agent readiness 26.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 31.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/gloo-mesh/](https://apis.io/providers/gloo-mesh/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Gloo Mesh: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/gloo-mesh/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
