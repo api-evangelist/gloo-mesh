@@ -26,7 +26,7 @@ plans:
   price_text: Contact sales
   period: none
 x-canonical:
-  generated: '2026-11-06'
+  generated: '2026-11-13'
   vocabulary: engine/economics/plans-canonical.yml
   models: []
   units: []
